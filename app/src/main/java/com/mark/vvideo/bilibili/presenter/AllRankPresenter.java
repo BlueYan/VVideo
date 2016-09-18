@@ -1,0 +1,72 @@
+package com.mark.vvideo.bilibili.presenter;
+
+import com.mark.vvideo.bilibili.contract.AllRankContract;
+import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.iface.IAllRank;
+import com.mark.vvideo.bilibili.model.impl.AllRankImpl;
+import com.mvp.library.utils.LogUtils;
+
+import java.security.AllPermission;
+import java.util.List;
+
+import rx.Observer;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+/**
+ * Author: Mark.
+ * Date: 2016/9/18.
+ * Function: 所有分类热门数据P层
+ *
+ * P层持有V M 层的对象
+ *
+ */
+public class AllRankPresenter implements AllRankContract.Presenter {
+
+    private IAllRank mAllRank; //M层对象
+
+    private AllRankContract.View mAllRankView; //V层对象
+
+    public AllRankPresenter(AllRankContract.View mAllRankView) {
+        this.mAllRankView = mAllRankView;
+        mAllRank = new AllRankImpl();  //实例化
+        mAllRankView.setPresenter(this);  //设置P层对象，在V层中去实现契约类接口中的V层接口　
+    }
+
+    @Override
+    public void setPagerTitle(String[] titles) {
+        mAllRank.getAllRank()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<AllRankModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(List<AllRankModel> allRankModels) {
+                        LogUtils.d("size = " + allRankModels.size());
+                        mAllRankView.setViewPager(allRankModels);
+                    }
+                });
+
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+}
