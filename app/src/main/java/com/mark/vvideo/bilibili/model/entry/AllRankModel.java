@@ -1,5 +1,8 @@
 package com.mark.vvideo.bilibili.model.entry;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -59,6 +62,11 @@ public class AllRankModel {
      */
 
     private List<VideosBean> videos;
+
+    protected AllRankModel(Parcel in) {
+        sort_name = in.readString();
+    }
+
 
     public String getSort_name() {
         return sort_name;

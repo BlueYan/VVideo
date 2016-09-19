@@ -21,6 +21,6 @@ public interface AllRankContract {
     }
 
     interface Presenter extends IBasePresenter {
-        void setPagerTitle(String []titles);
+        void setPagerTitle();
     }
 }

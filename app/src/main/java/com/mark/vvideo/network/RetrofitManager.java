@@ -34,6 +34,7 @@ public class RetrofitManager {
             synchronized (RetrofitManager.class) {
                 if ( mInstance == null ) {
                     mInstance = new RetrofitManager();
+
                 }
             }
         }
@@ -43,7 +44,7 @@ public class RetrofitManager {
     /**
      * 创建一个OkHttpClient对象，整合到Retrofit
      */
-    private void createOkHttpClient() {
+    private OkHttpClient createOkHttpClient() {
         if ( mClient == null ) {
             OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
             mBuilder.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
@@ -55,17 +56,18 @@ public class RetrofitManager {
             mBuilder.retryOnConnectionFailure(true);
             mClient = mBuilder.build();
         }
+        return mClient;
     }
 
     public BiliApi getBiliApi() {
         if ( mBiliApi == null ) {
-            synchronized (mBiliApi) {
+            synchronized (BiliApi.class) {
                 if (mBiliApi == null) {
                     mBiliApi = new Retrofit.Builder()
                             .baseUrl("http://bilibili-service.daoapp.io")
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
-                            .client(mClient)
+                            .client(createOkHttpClient())
                             .build()
                             .create(BiliApi.class);
                 }

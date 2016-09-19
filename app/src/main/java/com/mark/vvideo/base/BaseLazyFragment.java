@@ -32,7 +32,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     }
 
     /**
-     * 懒加载
+     * 懒加载 会比onCreateview生命周期方法先调用
      */
     protected abstract void onLazyInit();
 

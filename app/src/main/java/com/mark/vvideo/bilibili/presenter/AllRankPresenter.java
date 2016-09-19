@@ -36,7 +36,7 @@ public class AllRankPresenter implements AllRankContract.Presenter {
     }
 
     @Override
-    public void setPagerTitle(String[] titles) {
+    public void setPagerTitle() {
         mAllRank.getAllRank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

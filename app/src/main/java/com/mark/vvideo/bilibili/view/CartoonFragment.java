@@ -2,11 +2,24 @@ package com.mark.vvideo.bilibili.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
+import com.mark.vvideo.bilibili.adapter.CartoonAdapter;
+import com.mark.vvideo.bilibili.contract.AllRankContract;
+import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mvp.library.utils.LogUtils;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Author: Mark.
@@ -17,24 +30,43 @@ public class CartoonFragment extends BaseLazyFragment {
 
     private static final String TAG = CartoonFragment.class.getSimpleName();
 
+    @BindView(R.id.id_rv)
+    XRecyclerView mRv;
+
+    private static List<AllRankModel.VideosBean> mVideosBeans;
+
+    private CartoonAdapter mAdapter;
+
+    public static CartoonFragment newInstance(List<AllRankModel.VideosBean> videosBeens) {
+        mVideosBeans = videosBeens;
+        CartoonFragment mFragment = new CartoonFragment();
+        return mFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtils.d("onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_cartoon;
     }
 
     @Override
     protected void initView() {
-
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
+        mRv.setLayoutManager(manager);
+        if ( mAdapter == null ) {
+            mAdapter = new CartoonAdapter(getContext(), mVideosBeans);
+        }
+        mRv.setAdapter(mAdapter);
     }
 
     @Override
     protected void onLazyInit() {
-
+        LogUtils.d("lazy init");
     }
 }

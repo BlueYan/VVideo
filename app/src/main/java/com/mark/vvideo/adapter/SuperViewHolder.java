@@ -1,4 +1,4 @@
-package com.mvp.library.adapter;
+package com.mark.vvideo.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * 创建人：
@@ -102,6 +104,18 @@ public class SuperViewHolder extends RecyclerView.ViewHolder {
         if ( bitmap != null && !bitmap.isRecycled() ) {
             bitmap.recycle();
         }
+        return this;
+    }
+
+    /**
+     * 设置图片到SimpleDraweeView
+     * @param viewId
+     * @param url
+     * @return
+     */
+    public SuperViewHolder setImageUrlToSimpleDraweeView(int viewId, String url) {
+        SimpleDraweeView mDv = getView(viewId);
+        mDv.setImageURI(url);
         return this;
     }
 

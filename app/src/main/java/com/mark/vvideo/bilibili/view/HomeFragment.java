@@ -14,6 +14,7 @@ import com.mark.vvideo.bilibili.adapter.HomePagerAdapter;
 import com.mark.vvideo.bilibili.contract.AllRankContract;
 import com.mark.vvideo.bilibili.model.entry.AllRankModel;
 import com.mark.vvideo.bilibili.presenter.AllRankPresenter;
+import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
@@ -39,9 +40,15 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
 
     private HomePagerAdapter mHomePagerAdapter;
 
+    public static HomeFragment newInstance() {
+        HomeFragment mFragment = new HomeFragment();
+        return mFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mPresenter = new AllRankPresenter(this); //初始化P层
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -52,7 +59,13 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
 
     @Override
     protected void initView() {
+        LogUtils.d("init bilibili view");
+        mPresenter.setPagerTitle();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -72,9 +85,9 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
     @Override
     public void setViewPager(List<AllRankModel> allRankModels) {
         if ( mHomePagerAdapter == null ) {
-            mHomePagerAdapter = new HomePagerAdapter(allRankModels, getFragmentManager());
-            mViewpager.setAdapter(mHomePagerAdapter);
-            mPagerSlidetags.setViewPager(mViewpager);
+            mHomePagerAdapter = new HomePagerAdapter(allRankModels, getChildFragmentManager());
         }
+        mViewpager.setAdapter(mHomePagerAdapter);
+        mPagerSlidetags.setViewPager(mViewpager);
     }
 }

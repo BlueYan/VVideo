@@ -2,6 +2,7 @@ package com.mark.vvideo.home;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.mark.vvideo.R;
+import com.mark.vvideo.bilibili.view.HomeFragment;
 import com.mvp.library.utils.LogUtils;
 
 import butterknife.BindView;
@@ -22,10 +24,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @BindView(R.id.id_toolbar)
     Toolbar mToolbar;
+
     @BindView(R.id.id_fl_container)
     FrameLayout mFlContainer;
+
     @BindView(R.id.id_nv)
     NavigationView mNv;
+
     @BindView(R.id.id_dl)
     DrawerLayout mDl;
 
@@ -60,6 +65,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void run() {
                 int id = item.getItemId();
                 LogUtils.d("select");
+                switch ( id ) {
+                    case R.id.id_bi_item:
+                        FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
+                        mTransaction.add(R.id.id_fl_container, HomeFragment.newInstance(), "BiliHomeFragment");
+                        mTransaction.commit();
+                        break;
+                }
+
             }
         });
         return true;
