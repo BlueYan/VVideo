@@ -9,8 +9,8 @@ package com.mvp.library.base;
  */
 public interface IBasePresenter {
 
-    void onCreate();  //初始化数据
+    void subscribe();  //初始化数据
 
-    void onDestroy(); //释放资源
+    void unsubscribe(); //释放资源
 
 }

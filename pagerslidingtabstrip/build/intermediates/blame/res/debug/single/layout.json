@@ -1,6 +1,10 @@
 [
     {
-        "merged": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\debug\\layout\\psts_tab.xml",
-        "source": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\layout\\psts_tab.xml"
+        "merged": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/build/intermediates/res/merged/debug/layout/psts_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/res/layout/psts_tab.xml"
+    },
+    {
+        "merged": "/Users/Yan/Android/workspace/VVideo/E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\debug\\layout\\psts_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\layout\\psts_tab.xml"
     }
 ]

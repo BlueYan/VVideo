@@ -71,6 +71,7 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mPresenter.unsubscribe();
     }
 
     @Override
@@ -90,4 +91,5 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
         mViewpager.setAdapter(mHomePagerAdapter);
         mPagerSlidetags.setViewPager(mViewpager);
     }
+
 }

@@ -2,6 +2,7 @@ package com.mark.vvideo.bilibili.contract;
 
 import com.mark.vvideo.base.BaseView;
 import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mvp.library.base.BasePresenterImpl;
 import com.mvp.library.base.IBasePresenter;
 import com.mvp.library.base.IBaseView;
 

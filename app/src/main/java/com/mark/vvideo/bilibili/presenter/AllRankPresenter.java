@@ -4,6 +4,7 @@ import com.mark.vvideo.bilibili.contract.AllRankContract;
 import com.mark.vvideo.bilibili.model.entry.AllRankModel;
 import com.mark.vvideo.bilibili.model.iface.IAllRank;
 import com.mark.vvideo.bilibili.model.impl.AllRankImpl;
+import com.mvp.library.base.BasePresenterImpl;
 import com.mvp.library.utils.LogUtils;
 
 import java.security.AllPermission;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import rx.Observer;
 import rx.Scheduler;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -23,7 +26,7 @@ import rx.schedulers.Schedulers;
  * P层持有V M 层的对象
  *
  */
-public class AllRankPresenter implements AllRankContract.Presenter {
+public class AllRankPresenter extends BasePresenterImpl implements AllRankContract.Presenter {
 
     private IAllRank mAllRank; //M层对象
 
@@ -37,7 +40,7 @@ public class AllRankPresenter implements AllRankContract.Presenter {
 
     @Override
     public void setPagerTitle() {
-        mAllRank.getAllRank()
+        Subscription s = mAllRank.getAllRank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<AllRankModel>>() {
@@ -57,16 +60,11 @@ public class AllRankPresenter implements AllRankContract.Presenter {
                         mAllRankView.setViewPager(allRankModels);
                     }
                 });
-
+        addSubscription(s);
     }
 
     @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onDestroy() {
+    public void subscribe() {
 
     }
 }

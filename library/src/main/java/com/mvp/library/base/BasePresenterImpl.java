@@ -10,7 +10,7 @@ import rx.subscriptions.CompositeSubscription;
  * 修改人：
  * 修改时间：
  */
-public class BasePresenterImpl implements IBasePresenter {
+public abstract class BasePresenterImpl implements IBasePresenter {
 
     private CompositeSubscription mCompositeSubscription;
 
@@ -21,13 +21,15 @@ public class BasePresenterImpl implements IBasePresenter {
         this.mCompositeSubscription.add(s);
     }
 
+    /**
+     * 用于开始绑定订阅事件
+     * 例如获取页面数据并且调用V层显示
+     */
     @Override
-    public void onCreate() {
-
-    }
+    public abstract void subscribe();
 
     @Override
-    public void onDestroy() {
+    public void unsubscribe() {
         if ( mCompositeSubscription != null ) {
             mCompositeSubscription.unsubscribe();
         }
