@@ -1,5 +1,6 @@
 package com.mark.vvideo.bilibili.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mark.vvideo.R;
+import com.mark.vvideo.adapter.CommonAdapter;
 import com.mark.vvideo.base.BaseLazyFragment;
 import com.mark.vvideo.bilibili.adapter.CartoonAdapter;
 import com.mark.vvideo.bilibili.contract.AllRankContract;
@@ -46,7 +48,6 @@ public class CartoonFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtils.d("onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -55,12 +56,21 @@ public class CartoonFragment extends BaseLazyFragment {
         return R.layout.fragment_cartoon;
     }
 
+
     @Override
     protected void initView() {
+        LogUtils.d("onCreateView");
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         mRv.setLayoutManager(manager);
         if ( mAdapter == null ) {
             mAdapter = new CartoonAdapter(getContext(), mVideosBeans);
+            mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
+                @Override
+                public void onClickListener(View view, int position) {
+                    Intent intent = new Intent(getContext(), DetailActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
         mRv.setAdapter(mAdapter);
     }

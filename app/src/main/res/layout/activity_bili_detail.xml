@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/id_cl"
+    android:fitsSystemWindows="true"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/id_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/id_collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            >
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:placeholderImage="@drawable/place"
+                app:viewAspectRatio="1.6"
+                app:layout_collapseMode="parallax"
+                android:fitsSystemWindows="true"
+                />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/id_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"
+                />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1969年至1972年
+1969-70赛季，球队签下底特律大学的二年级新秀斯班瑟·海伍德。在这个赛季，作为一个新秀的海伍德献出NBA历史上最伟大的单赛季表现之一。1969年11月13日，海伍德献在对阵肯塔基上校队的比赛里，拿下31个篮板，创造队史纪录，并且保持自1990年。海伍德在152-116大胜洛杉矶明星队的比赛里独得59分，这个分数是球队ABA时期的最高，并且在球队历史上也仅次于1978年大卫·汤普森的73分排名第二位。1969-70赛季，海伍德平均得到30分和19.5个篮板，成为全明星赛MVP，并且得到最佳新秀和MVP。海伍德出色的发挥帮助球队取得1969-70赛季ABA联盟的西部最佳战绩。在ABA联盟季后赛首轮里击败华盛顿国会大厦队，但在分区决赛里负于洛杉矶明星队。
+1970-71赛季，斯班瑟·海伍德转会至NBA的西雅图超音速队。随着海伍德的出走，丹佛的战绩开始下滑。在教练斯坦·阿尔贝克的带领下，掘金在1970-71赛季的战绩下滑到30胜54负，其中还包括一个八连败。
+1971-72赛季，亚历克斯·汉纳姆接过球队教鞭。虽然球队在这个赛季的战绩变到34胜50负。不过这样惨淡的战绩掩盖不住队里优秀球员的出色表现。球队的后卫拉尔夫·辛普森场均得到27.4分，并且连续第五次入选了全明星阵容。尽管球队在这样的战绩下依然进入季后赛，但是在第一轮便负于印第安纳步行者队。
+1972年至1974年
+1972-73赛季，丹佛火箭队的战绩提高至47胜37负。球队的朱利叶斯·科叶入选ABA的最佳防守第一队，在1972年12月14日对阵弗吉尼亚侍从队的比赛里单场送出12个封盖。这个纪录直到20年后的1993年才被迪肯贝·穆托姆博追平。拉尔夫·辛普森和沃伦·贾巴里代表丹佛出战1973年的ABA全明星赛，而且贾巴里还当选那场比赛的MVP。火箭队在这个赛季虽进入季后赛，但在第一轮里连续第二年败给印第安纳步行者队。
+1973-74赛季，丹佛火箭队的战绩下滑至37胜47负，缺席该赛季的季后赛。尽管球队的中锋迈克·格林入选ABA的最佳新秀阵容，盖帽专家朱利叶斯·科叶再次入选最佳防守阵容。
+1974年至1977年1976年6月，掘金队在缴纳了320万加盟费之后，成为了NBA的一部分。在1976-77赛季初期，掘金队便豪夺一个八连胜，这也是球队历史的开局连胜最长纪录。最终掘金队以50胜32负的战绩获得中区的冠军，这个战绩仅次于湖人，是联盟并列第二好的成绩。但是掘金队还是在季后赛中被后来的总冠军波特兰开拓者队击败[1]  。
+　　
+1977年至1981年
+1977-78赛季，掘金队以48胜34负的战绩连续第二年获得中区冠军。在拉里·布朗的指挥下，掘金队在季后赛杀进了分区决赛，在分区决赛以2-4负于超音速队。在赛季的最后一场比赛前，掘金队的大卫·汤普森惊人的拿下73分的NBA历史第四高分，仅次于威尔特·张伯伦的100分和78分。
+1978-79赛季，在赛季伊始，掘金队遭到了开局的6连败，并且一直到12月还依然是胜少负多。局面直在1月才有好转，但在1979年2月1日，主帅拉里·布朗辞职转而与UCLA签约。唐尼·沃尔什接过教鞭，球队也以3月的一个7连胜作为给新教练的礼物。最终掘金的战绩是47胜35负。
+1979-80赛季，掘金队的战绩下滑到30胜52负。球队还以七连败的历史最差开局开始1979-80赛季，掘金队在这个赛季没有取得比三场更多的连胜。尽管球队的战绩不佳，但掘金队在赛季中期做的一笔交易。在1980年2月1日，掘金队与步行者的交易中用乔治·麦金尼斯换来了亚历克斯·英格利什和1980年的第一轮选秀权。1979-80赛季，大卫·汤普森脚部重伤并且只打39场比赛，职业生涯第一次成为球场上的旁观者。
+1980-81赛季，掘金的战绩进步到37胜45负，赛季开始时的主教练是唐尼·沃尔什而结束时的主教练却是具有传奇色彩的道格·莫，莫强调紧逼防守，团队协作，强调运动进攻。这个赛季，掘金队场均得分121.8分，连续5年场均得分破120分。但在防守端的场均失分是联盟最高的122.3分。1981年2月13号，掘金队在162-143战胜开拓者的比赛中创造一个新的球队得分纪录。1980-81赛季期间，大卫·汤普森伤愈复出，场均得25.5分，和亚历克斯·英格利什（场均23.8） 、丹·伊赛尔 （21.9）共同组成了掘金得分三人组。
+1981年至1984年"
+            />
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fab_play"
+        app:layout_anchor="@id/id_appbarLayout"
+        app:layout_anchorGravity="bottom|right|end"
+
+
+        />
+
+
+
+</android.support.design.widget.CoordinatorLayout>
