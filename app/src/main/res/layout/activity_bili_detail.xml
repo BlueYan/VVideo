@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/id_cl"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/id_appbarLayout"
@@ -22,8 +21,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="10dp"
+            app:expandedTitleMarginStart="30dp"
             >
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -83,8 +82,6 @@
         android:src="@drawable/ic_fab_play"
         app:layout_anchor="@id/id_appbarLayout"
         app:layout_anchorGravity="bottom|right|end"
-
-
         />
 
 

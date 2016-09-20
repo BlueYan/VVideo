@@ -40,7 +40,6 @@ public class DetailActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mCollapsingToolbar.setTitle("12321312312");
-
+        mCollapsingToolbar.setTitle("蕾姆");
     }
 }
