@@ -5,6 +5,7 @@ import com.mark.vvideo.bilibili.model.iface.IComment;
 import com.mark.vvideo.bilibili.model.impl.CommentImpl;
 import com.mvp.library.base.BasePresenterImpl;
 import com.mark.vvideo.bilibili.contract.CommentContract;
+import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
@@ -45,12 +46,13 @@ public class CommentPresenter extends BasePresenterImpl implements CommentContra
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(List<Comment> comments) {
-
+                        LogUtils.d("comments.size() = " + comments.size());
+                        mCommentView.setComments(comments);
                     }
                 });
         addSubscription(s);

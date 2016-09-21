@@ -1,7 +1,10 @@
 package com.mark.vvideo.bilibili.contract;
 
+import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mvp.library.base.IBasePresenter;
 import com.mvp.library.base.IBaseView;
+
+import java.util.List;
 
 /**
  * Author: Mark.
@@ -12,7 +15,7 @@ import com.mvp.library.base.IBaseView;
 public interface CommentContract {
 
     interface View extends IBaseView<Presenter> {
-
+        void setComments(List<Comment> mComments);
     }
 
 
