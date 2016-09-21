@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,12 @@ import com.mark.vvideo.R;
 import com.mark.vvideo.adapter.CommonAdapter;
 import com.mark.vvideo.base.BaseLazyFragment;
 import com.mark.vvideo.bilibili.adapter.CartoonAdapter;
-import com.mark.vvideo.bilibili.contract.AllRankContract;
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Author: Mark.
@@ -35,11 +32,11 @@ public class CartoonFragment extends BaseLazyFragment {
     @BindView(R.id.id_rv)
     XRecyclerView mRv;
 
-    private static List<AllRankModel.VideosBean> mVideosBeans;
+    private static List<AllRank.VideosBean> mVideosBeans;
 
     private CartoonAdapter mAdapter;
 
-    public static CartoonFragment newInstance(List<AllRankModel.VideosBean> videosBeens) {
+    public static CartoonFragment newInstance(List<AllRank.VideosBean> videosBeens) {
         mVideosBeans = videosBeens;
         CartoonFragment mFragment = new CartoonFragment();
         return mFragment;

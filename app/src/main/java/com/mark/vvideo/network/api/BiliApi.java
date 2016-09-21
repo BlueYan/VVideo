@@ -1,10 +1,12 @@
 package com.mark.vvideo.network.api;
 
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
+import com.mark.vvideo.bilibili.model.entry.Comment;
 
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -20,6 +22,10 @@ public interface BiliApi {
      * @return
      */
     @GET("/allrank")
-    Observable<List<AllRankModel>> getAllRank();
+    Observable<List<AllRank>> getAllRank();
+
+    @GET("/feedback")
+    Observable<List<Comment>> getComments(@Query("aid") int aid, @Query("page") int page,
+                                          @Query("pagesize") int pageSize, @Query("ver") int ver);
 
 }

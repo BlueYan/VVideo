@@ -1,21 +1,17 @@
 package com.mark.vvideo.bilibili.presenter;
 
 import com.mark.vvideo.bilibili.contract.AllRankContract;
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.model.iface.IAllRank;
 import com.mark.vvideo.bilibili.model.impl.AllRankImpl;
 import com.mvp.library.base.BasePresenterImpl;
 import com.mvp.library.utils.LogUtils;
 
-import java.security.AllPermission;
 import java.util.List;
 
 import rx.Observer;
-import rx.Scheduler;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -43,7 +39,7 @@ public class AllRankPresenter extends BasePresenterImpl implements AllRankContra
         Subscription s = mAllRank.getAllRank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<AllRankModel>>() {
+                .subscribe(new Observer<List<AllRank>>() {
                     @Override
                     public void onCompleted() {
 
@@ -55,7 +51,7 @@ public class AllRankPresenter extends BasePresenterImpl implements AllRankContra
                     }
 
                     @Override
-                    public void onNext(List<AllRankModel> allRankModels) {
+                    public void onNext(List<AllRank> allRankModels) {
                         LogUtils.d("size = " + allRankModels.size());
                         mAllRankView.setViewPager(allRankModels);
                     }

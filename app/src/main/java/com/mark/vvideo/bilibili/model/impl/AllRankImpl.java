@@ -1,6 +1,6 @@
 package com.mark.vvideo.bilibili.model.impl;
 
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.model.iface.IAllRank;
 import com.mark.vvideo.network.RetrofitManager;
 
@@ -18,7 +18,7 @@ public class AllRankImpl implements IAllRank {
     private static final String TAG = AllRankImpl.class.getSimpleName();
 
     @Override
-    public Observable<List<AllRankModel>> getAllRank() {
+    public Observable<List<AllRank>> getAllRank() {
         return RetrofitManager.getInstance().getBiliApi().getAllRank();
     }
 }

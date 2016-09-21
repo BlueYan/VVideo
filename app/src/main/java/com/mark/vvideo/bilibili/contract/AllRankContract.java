@@ -1,6 +1,6 @@
 package com.mark.vvideo.bilibili.contract;
 
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mvp.library.base.IBasePresenter;
 import com.mvp.library.base.IBaseView;
 
@@ -15,7 +15,7 @@ public interface AllRankContract {
 
 
     interface View extends IBaseView<Presenter> {
-        void setViewPager(List<AllRankModel> allRankModels);
+        void setViewPager(List<AllRank> allRanks);
 
     }
 

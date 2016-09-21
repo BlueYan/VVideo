@@ -1,6 +1,6 @@
 package com.mark.vvideo.bilibili.model.iface;
 
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ import rx.Observable;
  */
 public interface IAllRank {
 
-    Observable<List<AllRankModel>> getAllRank();
+    Observable<List<AllRank>> getAllRank();
 
 }

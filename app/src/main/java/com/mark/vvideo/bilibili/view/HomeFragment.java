@@ -12,14 +12,13 @@ import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseFragment;
 import com.mark.vvideo.bilibili.adapter.HomePagerAdapter;
 import com.mark.vvideo.bilibili.contract.AllRankContract;
-import com.mark.vvideo.bilibili.model.entry.AllRankModel;
+import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.presenter.AllRankPresenter;
 import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Author: Mark.
@@ -81,12 +80,12 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
 
     /**
      * 设置viewpager数据
-     * @param allRankModels
+     * @param allRanks
      */
     @Override
-    public void setViewPager(List<AllRankModel> allRankModels) {
+    public void setViewPager(List<AllRank> allRanks) {
         if ( mHomePagerAdapter == null ) {
-            mHomePagerAdapter = new HomePagerAdapter(allRankModels, getChildFragmentManager());
+            mHomePagerAdapter = new HomePagerAdapter(allRanks, getChildFragmentManager());
         }
         mViewpager.setAdapter(mHomePagerAdapter);
         mPagerSlidetags.setViewPager(mViewpager);

@@ -10,7 +10,7 @@ import java.util.List;
  * Date: 2016/9/18.
  * Function: Bilibili首页数据模型
  */
-public class AllRankModel {
+public class AllRank {
 
 
     /**
@@ -63,7 +63,7 @@ public class AllRankModel {
 
     private List<VideosBean> videos;
 
-    protected AllRankModel(Parcel in) {
+    protected AllRank(Parcel in) {
         sort_name = in.readString();
     }
 
