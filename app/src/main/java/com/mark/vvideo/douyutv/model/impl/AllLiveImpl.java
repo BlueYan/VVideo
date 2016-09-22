@@ -2,6 +2,7 @@ package com.mark.vvideo.douyutv.model.impl;
 
 import com.mark.vvideo.douyutv.model.entry.AllLive;
 import com.mark.vvideo.douyutv.model.iface.IAllLive;
+import com.mark.vvideo.network.RetrofitManager;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class AllLiveImpl implements IAllLive {
 
     @Override
     public Observable<List<AllLive>> getAllLives(int limit, int offest) {
-        return null;
+        return RetrofitManager.getInstance().getDouyuApi().getAllLives(limit, offest);
+//        return null;
     }
 }

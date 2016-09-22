@@ -1,7 +1,10 @@
 package com.mark.vvideo.douyutv.contract;
 
+import com.mark.vvideo.douyutv.model.entry.AllLive;
 import com.mvp.library.base.IBasePresenter;
 import com.mvp.library.base.IBaseView;
+
+import java.util.List;
 
 /**
  * Author: Mark.
@@ -12,7 +15,7 @@ import com.mvp.library.base.IBaseView;
 public interface AllLiveContract {
 
     interface View extends IBaseView<Presenter> {
-
+        void setAllLives(List<AllLive> mAllLives);
     }
 
     interface Presenter extends IBasePresenter {

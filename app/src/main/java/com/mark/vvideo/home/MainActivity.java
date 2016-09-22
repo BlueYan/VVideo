@@ -2,6 +2,7 @@ package com.mark.vvideo.home;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import android.widget.FrameLayout;
 
 import com.mark.vvideo.R;
 import com.mark.vvideo.bilibili.view.HomeFragment;
+import com.mark.vvideo.bilibili.view.IntroductionFragment;
+import com.mark.vvideo.douyutv.view.AllLiveFragment;
 import com.mvp.library.utils.LogUtils;
 
 import butterknife.BindView;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout mDl;
 
     private ActionBarDrawerToggle mToggle;
+
+    private HomeFragment mBiliHomeFragment;
+
+    private AllLiveFragment mDouyuAllLiveFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +71,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 int id = item.getItemId();
-                LogUtils.d("select");
+                FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
                 switch ( id ) {
                     case R.id.id_bi_item:
-                        FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
-                        mTransaction.add(R.id.id_fl_container, HomeFragment.newInstance(), "BiliHomeFragment");
+                        mBiliHomeFragment = HomeFragment.newInstance();
+                        hideFragment(mTransaction);
+                        mTransaction.add(R.id.id_fl_container, mBiliHomeFragment, "BiliHomeFragment");
+                        mTransaction.commit();
+                        break;
+
+                    case R.id.id_douyu:
+                        mDouyuAllLiveFragment = AllLiveFragment.newInstance();
+                        hideFragment(mTransaction);
+                        mTransaction.add(R.id.id_fl_container, mDouyuAllLiveFragment, "DouyuAllLiveFragment");
                         mTransaction.commit();
                         break;
                 }
@@ -76,5 +91,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         return true;
+    }
+
+    private void hideFragment(FragmentTransaction mTransaction) {
+        if ( mBiliHomeFragment != null ) {
+            mTransaction.hide(mBiliHomeFragment);
+        }
+        if ( mDouyuAllLiveFragment != null ) {
+            mTransaction.hide(mDouyuAllLiveFragment);
+        }
     }
 }
