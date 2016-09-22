@@ -2,6 +2,7 @@ package com.mark.vvideo.network;
 
 import com.mark.vvideo.base.App;
 import com.mark.vvideo.network.api.BiliApi;
+import com.mark.vvideo.network.api.DouyuApi;
 import com.mvp.library.utils.NetworkUtils;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Author: Mark.
@@ -28,6 +30,10 @@ public class RetrofitManager {
     private OkHttpClient mClient; //OkHttp对象
 
     private static BiliApi mBiliApi;
+
+    private static BiliApi mHostBiliApi = null;
+
+    private static DouyuApi mDouyuApi = null;
 
     public static RetrofitManager getInstance() {
         if ( mInstance == null ) {
@@ -59,12 +65,37 @@ public class RetrofitManager {
         return mClient;
     }
 
+    /**
+     * 获取url是http://bilibili-service.daoapp.io的Api接口
+     * @return
+     */
     public BiliApi getBiliApi() {
+        if ( mHostBiliApi == null ) {
+            synchronized (BiliApi.class) {
+                if (mHostBiliApi == null) {
+                    mHostBiliApi = new Retrofit.Builder()
+                            .baseUrl("http://bilibili-service.daoapp.io")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(createOkHttpClient())
+                            .build()
+                            .create(BiliApi.class);
+                }
+            }
+        }
+        return mHostBiliApi;
+    }
+
+    /**
+     * 由于需要不同的接口
+     * @return
+     */
+    public BiliApi getHostBiliApi() {
         if ( mBiliApi == null ) {
             synchronized (BiliApi.class) {
                 if (mBiliApi == null) {
                     mBiliApi = new Retrofit.Builder()
-                            .baseUrl("http://bilibili-service.daoapp.io")
+                            .baseUrl("http://api.bilibili.cn")
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
                             .client(createOkHttpClient())
@@ -76,6 +107,23 @@ public class RetrofitManager {
         return mBiliApi;
     }
 
+
+    public DouyuApi getDouyuApi() {
+        if ( mDouyuApi == null ) {
+            synchronized (DouyuApi.class) {
+                if ( mDouyuApi == null ) {
+                    mDouyuApi = new Retrofit.Builder()
+                            .baseUrl("http://capi.douyucdn.cn/")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(createOkHttpClient())
+                            .build()
+                            .create(DouyuApi.class);
+                }
+            }
+        }
+        return mDouyuApi;
+    }
 
     /**
      * 离线缓存

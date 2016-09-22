@@ -3,12 +3,18 @@ package com.mark.vvideo.bilibili.presenter;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.model.iface.IComment;
 import com.mark.vvideo.bilibili.model.impl.CommentImpl;
+import com.mark.vvideo.network.RetrofitManager;
+import com.mark.vvideo.network.api.BiliApi;
 import com.mvp.library.base.BasePresenterImpl;
 import com.mark.vvideo.bilibili.contract.CommentContract;
 import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +52,9 @@ public class CommentPresenter extends BasePresenterImpl implements CommentContra
 
                     @Override
                     public void onError(Throwable e) {
+                        LogUtils.d("msg = " + e.getMessage());
                         e.printStackTrace();
+
                     }
 
                     @Override

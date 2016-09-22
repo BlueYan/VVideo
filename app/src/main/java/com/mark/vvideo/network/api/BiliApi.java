@@ -2,10 +2,13 @@ package com.mark.vvideo.network.api;
 
 import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.model.entry.Comment;
+import com.mark.vvideo.bilibili.model.entry.Introduction;
 
 import java.util.List;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -28,4 +31,7 @@ public interface BiliApi {
     Observable<List<Comment>> getComments(@Query("aid") int aid, @Query("page") int page,
                                           @Query("pagesize") int pageSize, @Query("ver") int ver);
 
+    //http://bilibili-service.daoapp.io/view/aid
+    @GET("/view/{aid}")
+    Observable<Introduction> getIntroductions(@Path("aid") int aid);
 }

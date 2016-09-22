@@ -53,7 +53,7 @@ public class HomeFragment extends BaseFragment implements AllRankContract.View {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_bilibili_home;
+        return R.layout.fragment_bili_home;
     }
 
     @Override

@@ -24,6 +24,6 @@ public class CommentImpl implements IComment {
 
     @Override
     public Observable<List<Comment>> getComments(int aid, int page, int pageSize, int ver) {
-        return RetrofitManager.getInstance().getBiliApi().getComments(aid, page, pageSize, ver);
+        return RetrofitManager.getInstance().getHostBiliApi().getComments(aid, page, pageSize, ver);
     }
 }

@@ -1,6 +1,7 @@
 package com.mark.vvideo.bilibili.view;
 
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -9,19 +10,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.jcodecraeer.xrecyclerview.progressindicator.indicator.PacmanIndicator;
 import com.mark.vvideo.R;
-import com.mark.vvideo.base.BaseFragment;
 import com.mark.vvideo.base.BaseLazyFragment;
 import com.mark.vvideo.bilibili.adapter.CommentAdapter;
 import com.mark.vvideo.bilibili.contract.CommentContract;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.presenter.CommentPresenter;
+import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Author: Mark.
@@ -39,7 +38,7 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @BindView(R.id.id_msg_et)
     EditText mMsgEt;
 
-    private int mAid;
+    private String mAid;
 
     private int mPage = 1;
 
@@ -53,11 +52,12 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
 
     private CommentContract.Presenter mPresenter;
 
+    private boolean isPerpared = false;
 
-    public static CommentFragment newInstance(int aid) {
+    public static CommentFragment newInstance(String aid) {
         CommentFragment mFragment = new CommentFragment();
         Bundle args = new Bundle();
-        args.putInt("aid", aid);
+        args.putString("aid", aid);
         mFragment.setArguments(args);
         return mFragment;
     }
@@ -65,13 +65,15 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAid = getArguments().getInt("aid");
+        mAid = getArguments().getString("aid");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         mPresenter = new CommentPresenter(this);
+        isPerpared = true;
+        onLazyInit();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -81,22 +83,21 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
      */
     @Override
     protected void onLazyInit() {
-        mPresenter.getComments(mAid, mPage, mPageSize, mVer);
+        if ( !isPerpared || !isVisible ) {
+            LogUtils.d("CommentFragment lazy init");
+            return;
+        }
+        mPresenter.getComments(Integer.valueOf(mAid), mPage, mPageSize, mVer);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_comment;
+        return R.layout.fragment_bili_comment;
     }
 
     @Override
     protected void initView() {
-        LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
-        mXRecyclerview.setLayoutManager(mLinearManager);
-        if ( mAdapter == null ) {
-            mAdapter = new CommentAdapter(getContext(), mComments);
-        }
-        mXRecyclerview.setAdapter(mAdapter);
+        LogUtils.d("CommentFragment initView");
     }
 
 
@@ -112,5 +113,11 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @Override
     public void setComments(List<Comment> mComments) {
         this.mComments = mComments;
+        LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
+        mXRecyclerview.setLayoutManager(mLinearManager);
+        if ( mAdapter == null ) {
+            mAdapter = new CommentAdapter(getContext(), mComments);
+        }
+        mXRecyclerview.setAdapter(mAdapter);
     }
 }

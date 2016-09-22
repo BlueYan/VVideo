@@ -65,6 +65,8 @@ public class CartoonFragment extends BaseLazyFragment {
                 @Override
                 public void onClickListener(View view, int position) {
                     Intent intent = new Intent(getContext(), DetailActivity.class);
+                    LogUtils.d("aid = " + mVideosBeans.get(position).getAid());
+                    intent.putExtra("aid", mVideosBeans.get(position).getAid());
                     startActivity(intent);
                 }
             });

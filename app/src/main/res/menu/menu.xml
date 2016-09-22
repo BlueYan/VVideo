@@ -9,4 +9,12 @@
             android:title="哔哩哔哩"/>
     </group>
 
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/id_douyu"
+            android:icon="@drawable/ic_douyu"
+            android:title="斗鱼TV"/>
+
+    </group>
+
 </menu>
