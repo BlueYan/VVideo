@@ -20,6 +20,9 @@ public interface DouyuApi {
 
     //http://capi.douyucdn.cn/api/v1/live?limit=20&offset=0
     @GET("api/v1/live")
-    Observable<List<AllLive>> getAllLives(@Query("limit") int limit, @Query("offest") int offest);
+    Observable<AllLive> getAllLives(@Query("limit") int limit, @Query("offest") int offest);
 
+//    @GET("api/v1/live")
+//    Call<String> getAllLives(@Query("limit") int limit, @Query("offest") int offest);
+    //"room/"+285995+"?aid=android&clientsys=android&time=1474607061"+1231
 }

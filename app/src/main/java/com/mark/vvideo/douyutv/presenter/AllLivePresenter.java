@@ -1,5 +1,7 @@
 package com.mark.vvideo.douyutv.presenter;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mark.vvideo.douyutv.model.entry.AllLive;
 import com.mark.vvideo.douyutv.model.iface.IAllLive;
 import com.mark.vvideo.douyutv.model.impl.AllLiveImpl;
@@ -8,6 +10,7 @@ import com.mvp.library.base.BasePresenterImpl;
 import com.mark.vvideo.douyutv.contract.AllLiveContract;
 import com.mvp.library.utils.LogUtils;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,13 +44,12 @@ public class AllLivePresenter extends BasePresenterImpl implements AllLiveContra
         mAllLive = new AllLiveImpl();
     }
 
-
     @Override
     public void getAllLives(int limit, int offest) {
         Subscription subscription = mAllLive.getAllLives(limit, offest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<AllLive>>() {
+                .subscribe(new Subscriber<AllLive>() {
                     @Override
                     public void onCompleted() {
 
@@ -59,31 +61,13 @@ public class AllLivePresenter extends BasePresenterImpl implements AllLiveContra
                     }
 
                     @Override
-                    public void onNext(List<AllLive> allLives) {
-                        LogUtils.d("allLives.size() = " + allLives.size());
+                    public void onNext(AllLive allLive) {
+                        LogUtils.d("allive = " + allLive.getData().get(0).getRoom_name());
+                        mView.setAllLives(allLive);
                     }
                 });
 
         addSubscription(subscription);
-
-//        Retrofit mRetrofit = new Retrofit.Builder()
-//                .baseUrl("http://capi.douyucdn.cn/")
-//                .addConverterFactory(ScalarsConverterFactory.create())
-//                .build();
-//        DouyuApi mApi = mRetrofit.create(DouyuApi.class);
-//        Call<String> mCall = mApi.getAllLives(limit, 0);
-//        mCall.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                LogUtils.d("str = " + response.body().toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-
     }
 
     @Override

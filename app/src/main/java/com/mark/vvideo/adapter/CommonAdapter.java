@@ -79,7 +79,18 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<SuperViewHol
      */
     public void addItem(int position, T item) {
         mData.add(position, item);
-        notifyItemInserted(position);
+        notifyItemInserted(position + 1);
+    }
+
+    /**
+     * 批量更新
+     * @param size
+     * @param list
+     */
+    public void addAll(int size, List<T> list) {
+        for ( int i = 0; i < list.size(); i++, size++) {
+            addItem(size, list.get(i));
+        }
     }
 
     /**

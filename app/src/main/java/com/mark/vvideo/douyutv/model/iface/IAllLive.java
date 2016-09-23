@@ -14,6 +14,6 @@ import rx.Observable;
 
 public interface IAllLive {
 
-    Observable<List<AllLive>> getAllLives(int limit, int offest);
+    Observable<AllLive> getAllLives(int limit, int offest);
 
 }

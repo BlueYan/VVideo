@@ -15,7 +15,7 @@ import java.util.List;
 public interface AllLiveContract {
 
     interface View extends IBaseView<Presenter> {
-        void setAllLives(List<AllLive> mAllLives);
+        void setAllLives(AllLive mAllLive);
     }
 
     interface Presenter extends IBasePresenter {

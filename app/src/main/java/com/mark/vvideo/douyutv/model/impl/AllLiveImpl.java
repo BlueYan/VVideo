@@ -23,8 +23,7 @@ public class AllLiveImpl implements IAllLive {
     }
 
     @Override
-    public Observable<List<AllLive>> getAllLives(int limit, int offest) {
+    public Observable<AllLive> getAllLives(int limit, int offest) {
         return RetrofitManager.getInstance().getDouyuApi().getAllLives(limit, offest);
-//        return null;
     }
 }

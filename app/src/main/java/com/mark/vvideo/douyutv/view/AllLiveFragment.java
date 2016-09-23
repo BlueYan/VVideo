@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseFragment;
@@ -14,6 +15,8 @@ import com.mark.vvideo.douyutv.adapter.AllLiveAdapter;
 import com.mark.vvideo.douyutv.contract.AllLiveContract;
 import com.mark.vvideo.douyutv.model.entry.AllLive;
 import com.mark.vvideo.douyutv.presenter.AllLivePresenter;
+import com.mark.vvideo.util.DividerItemDecoration;
+import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
@@ -36,6 +39,12 @@ public class AllLiveFragment extends BaseFragment implements AllLiveContract.Vie
     private AllLiveContract.Presenter mPresenter;
 
     private AllLiveAdapter mAdapter;
+
+    private static final int mLimit = 20;
+
+    private int mOffest = 0;
+
+    private List<AllLive.Data> mData;
 
     public static AllLiveFragment newInstance() {
         AllLiveFragment mFragment = new AllLiveFragment();
@@ -61,16 +70,36 @@ public class AllLiveFragment extends BaseFragment implements AllLiveContract.Vie
     @Override
     protected void initView() {
         mPresenter = new AllLivePresenter(this);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
+        initRecyclerView();
+        mPresenter.getAllLives(mLimit, mOffest);  //开始调用P层的获取数据代码
+    }
+
+    private void initRecyclerView() {
+        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mXRecyclerview.setLayoutManager(mLinearLayoutManager);
-        mPresenter.getAllLives(20, 0);  //开始调用P层的获取数据代码
+        mXRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mXRecyclerview.setLoadingMoreEnabled(true); //开启加载更多功能
+        mXRecyclerview.setLoadingMoreProgressStyle(ProgressStyle.BallClipRotatePulse); //设置加载更多样式
+        mXRecyclerview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                mOffest = 0;
+                mData.clear();
+                mPresenter.getAllLives(mLimit, mOffest);
+            }
+
+            @Override
+            public void onLoadMore() {
+                mOffest = mOffest + 20;
+                mPresenter.getAllLives(mLimit, mOffest);
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-
     }
 
     @Override
@@ -79,10 +108,19 @@ public class AllLiveFragment extends BaseFragment implements AllLiveContract.Vie
     }
 
     @Override
-    public void setAllLives(List<AllLive> mAllLives) {
+    public void setAllLives(AllLive mAllLives) {
         if ( mAdapter == null ) {
-            mAdapter = new AllLiveAdapter(getContext(), mAllLives);
+            mData = mAllLives.getData();
+            mAdapter = new AllLiveAdapter(getContext(), mData);
+            mXRecyclerview.setAdapter(mAdapter);
+        } else {
+            if ( mData.size() == 0 ) {
+                mXRecyclerview.refreshComplete();
+            } else {
+                mXRecyclerview.loadMoreComplete(); //通知加载完毕
+            }
+            mAdapter.addAll(mData.size(), mAllLives.getData());
         }
-        mXRecyclerview.setAdapter(mAdapter);
+
     }
 }

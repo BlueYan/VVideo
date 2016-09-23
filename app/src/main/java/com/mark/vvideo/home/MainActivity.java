@@ -72,19 +72,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void run() {
                 int id = item.getItemId();
                 FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
+                hideFragment(mTransaction);
                 switch ( id ) {
                     case R.id.id_bi_item:
-                        mBiliHomeFragment = HomeFragment.newInstance();
-                        hideFragment(mTransaction);
-                        mTransaction.add(R.id.id_fl_container, mBiliHomeFragment, "BiliHomeFragment");
-                        mTransaction.commit();
+                        mToolbar.setTitle("哔哩哔哩动画");
+                        if ( mBiliHomeFragment == null ) {
+                            mBiliHomeFragment = HomeFragment.newInstance();
+                            mTransaction.add(R.id.id_fl_container, mBiliHomeFragment, "BiliHomeFragment");
+                            mTransaction.commit();
+                        } else {
+                            mTransaction.show(mBiliHomeFragment);
+                        }
                         break;
 
                     case R.id.id_douyu:
-                        mDouyuAllLiveFragment = AllLiveFragment.newInstance();
-                        hideFragment(mTransaction);
-                        mTransaction.add(R.id.id_fl_container, mDouyuAllLiveFragment, "DouyuAllLiveFragment");
-                        mTransaction.commit();
+                        mToolbar.setTitle("斗鱼TV");
+                        if ( mDouyuAllLiveFragment == null ) {
+                            mDouyuAllLiveFragment = AllLiveFragment.newInstance();
+                            mTransaction.add(R.id.id_fl_container, mDouyuAllLiveFragment, "DouyuAllLiveFragment");
+                            mTransaction.commit();
+                        } else {
+                            mTransaction.show(mDouyuAllLiveFragment);
+                        }
                         break;
                 }
 
