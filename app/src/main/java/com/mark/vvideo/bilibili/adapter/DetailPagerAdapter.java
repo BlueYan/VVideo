@@ -22,7 +22,6 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
 
     public DetailPagerAdapter(FragmentManager fm, String mAid) {
         super(fm);
-        LogUtils.d("mAid = " + mAid);
         this.mAid = mAid;
     }
 
@@ -32,7 +31,6 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return IntroductionFragment.newInstance(mAid);
             case 1:
-                LogUtils.d("mAid = " + mAid);
                 return CommentFragment.newInstance(mAid);
         }
         return null;

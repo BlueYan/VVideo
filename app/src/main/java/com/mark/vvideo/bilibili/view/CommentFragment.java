@@ -16,6 +16,7 @@ import com.mark.vvideo.bilibili.adapter.CommentAdapter;
 import com.mark.vvideo.bilibili.contract.CommentContract;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.presenter.CommentPresenter;
+import com.mark.vvideo.util.DividerItemDecoration;
 import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
 
     private CommentAdapter mAdapter;
 
-    private List<Comment> mComments;
+    private Comment mComment;
 
     private CommentContract.Presenter mPresenter;
 
@@ -87,7 +88,7 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
             LogUtils.d("CommentFragment lazy init");
             return;
         }
-        mPresenter.getComments(Integer.valueOf(mAid), mPage, mPageSize, mVer);
+        mPresenter.getComments(Integer.valueOf(mAid), mPage, mPageSize, mVer, "hot");
     }
 
     @Override
@@ -98,6 +99,10 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @Override
     protected void initView() {
         LogUtils.d("CommentFragment initView");
+        LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
+        mXRecyclerview.setLayoutManager(mLinearManager);
+        mXRecyclerview.setPullRefreshEnabled(false);
+        mXRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
 
@@ -108,16 +113,16 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
 
     /**
      * 获取从P层返回的数据
-     * @param mComments
+     * @param mComment
      */
     @Override
-    public void setComments(List<Comment> mComments) {
-        this.mComments = mComments;
-        LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
-        mXRecyclerview.setLayoutManager(mLinearManager);
+    public void setComments(Comment mComment) {
+        this.mComment = mComment;
+
         if ( mAdapter == null ) {
-            mAdapter = new CommentAdapter(getContext(), mComments);
+            mAdapter = new CommentAdapter(getContext(), mComment.getList());
         }
+        LogUtils.d("set comments");
         mXRecyclerview.setAdapter(mAdapter);
     }
 }

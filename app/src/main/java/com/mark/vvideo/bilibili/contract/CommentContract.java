@@ -15,12 +15,12 @@ import java.util.List;
 public interface CommentContract {
 
     interface View extends IBaseView<Presenter> {
-        void setComments(List<Comment> mComments);
+        void setComments(Comment mComment);
     }
 
 
     interface Presenter extends IBasePresenter {
-        void getComments(int aid, int page, int pageSize, int ver);
+        void getComments(int aid, int page, int pageSize, int ver, String order);
     }
 
 }

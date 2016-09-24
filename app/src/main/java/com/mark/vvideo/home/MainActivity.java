@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if ( mBiliHomeFragment == null ) {
                             mBiliHomeFragment = HomeFragment.newInstance();
                             mTransaction.add(R.id.id_fl_container, mBiliHomeFragment, "BiliHomeFragment");
-                            mTransaction.commit();
                         } else {
                             mTransaction.show(mBiliHomeFragment);
                         }
@@ -90,12 +89,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if ( mDouyuAllLiveFragment == null ) {
                             mDouyuAllLiveFragment = AllLiveFragment.newInstance();
                             mTransaction.add(R.id.id_fl_container, mDouyuAllLiveFragment, "DouyuAllLiveFragment");
-                            mTransaction.commit();
                         } else {
                             mTransaction.show(mDouyuAllLiveFragment);
                         }
                         break;
                 }
+                mTransaction.commit();
 
             }
         });

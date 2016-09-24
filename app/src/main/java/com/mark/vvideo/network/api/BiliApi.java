@@ -28,8 +28,8 @@ public interface BiliApi {
     Observable<List<AllRank>> getAllRank();
 
     @GET("/feedback")
-    Observable<List<Comment>> getComments(@Query("aid") int aid, @Query("page") int page,
-                                          @Query("pagesize") int pageSize, @Query("ver") int ver);
+    Observable<Comment> getComments(@Query("aid") int aid, @Query("page") int page,
+                                          @Query("pagesize") int pageSize, @Query("ver") int ver, @Query("order") String order);
 
     //http://bilibili-service.daoapp.io/view/aid
     @GET("/view/{aid}")

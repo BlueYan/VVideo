@@ -40,11 +40,11 @@ public class CommentPresenter extends BasePresenterImpl implements CommentContra
     }
 
     @Override
-    public void getComments(int aid, int page, int pageSize, int ver) {
-        Subscription s = mIComment.getComments(aid, page, pageSize, ver)
+    public void getComments(int aid, int page, int pageSize, int ver, String order) {
+        Subscription s = mIComment.getComments(aid, page, pageSize, ver, order)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Comment>>() {
+                .subscribe(new Subscriber<Comment>() {
                     @Override
                     public void onCompleted() {
 
@@ -58,9 +58,9 @@ public class CommentPresenter extends BasePresenterImpl implements CommentContra
                     }
 
                     @Override
-                    public void onNext(List<Comment> comments) {
-                        LogUtils.d("comments.size() = " + comments.size());
-                        mCommentView.setComments(comments);
+                    public void onNext(Comment comment) {
+                        LogUtils.d("comment.getHostList().size() = " + comment.getList().size());
+                        mCommentView.setComments(comment);
                     }
                 });
         addSubscription(s);

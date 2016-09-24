@@ -50,6 +50,7 @@ public class IntroductionPresenter extends BasePresenterImpl implements Introduc
                     @Override
                     public void onNext(Introduction introduction) {
                         LogUtils.d("json = " + introduction.toString());
+                        mView.setIntroduction(introduction);
                     }
                 });
 

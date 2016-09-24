@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mark.vvideo.R;
+import com.mark.vvideo.adapter.CommonAdapter;
 import com.mark.vvideo.base.BaseFragment;
 import com.mark.vvideo.douyutv.adapter.AllLiveAdapter;
 import com.mark.vvideo.douyutv.contract.AllLiveContract;
 import com.mark.vvideo.douyutv.model.entry.AllLive;
 import com.mark.vvideo.douyutv.presenter.AllLivePresenter;
 import com.mark.vvideo.util.DividerItemDecoration;
+import com.mark.vvideo.util.Utils;
 import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
@@ -112,6 +114,14 @@ public class AllLiveFragment extends BaseFragment implements AllLiveContract.Vie
         if ( mAdapter == null ) {
             mData = mAllLives.getData();
             mAdapter = new AllLiveAdapter(getContext(), mData);
+            mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
+                @Override
+                public void onClickListener(View view, int position) {
+                    String mRoomId = mData.get(position).getRoom_id();
+                    LogUtils.d("roomid = " + mData.get(position).getRoom_id());
+                    Utils.getUrl(mRoomId);
+                }
+            });
             mXRecyclerview.setAdapter(mAdapter);
         } else {
             if ( mData.size() == 0 ) {

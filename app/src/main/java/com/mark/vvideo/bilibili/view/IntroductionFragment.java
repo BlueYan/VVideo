@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
@@ -12,6 +13,9 @@ import com.mark.vvideo.bilibili.contract.IntroductionContract;
 import com.mark.vvideo.bilibili.model.entry.Introduction;
 import com.mark.vvideo.bilibili.presenter.IntroductionPresenter;
 import com.mvp.library.utils.LogUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Author Mark
@@ -22,6 +26,9 @@ import com.mvp.library.utils.LogUtils;
 public class IntroductionFragment extends BaseLazyFragment implements IntroductionContract.View {
 
     private static final String TAG = IntroductionFragment.class.getSimpleName();
+
+    @BindView(R.id.textView)
+    TextView mTitleView;
 
     private boolean isPrepared = false;
 
@@ -55,11 +62,10 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
 
     @Override
     protected void onLazyInit() {
-        if ( !isPrepared || !isVisible ) {
-            LogUtils.d("IntroductionFragment lazy init");
+        if (!isPrepared || !isVisible) {
             return;
         }
-        mPresenter.getIntroduction(Integer.valueOf(mAid));
+       // mPresenter.getIntroduction(Integer.valueOf(mAid));
     }
 
     @Override
@@ -75,5 +81,11 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
     @Override
     public void setPresenter(IntroductionContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void setIntroduction(Introduction introduction) {
+        LogUtils.d("introduction.title = " + introduction.getTitle());
+        mTitleView.setText(introduction.getTitle());
     }
 }

@@ -1,5 +1,6 @@
 package com.mark.vvideo.bilibili.contract;
 
+import com.mark.vvideo.bilibili.model.entry.Introduction;
 import com.mvp.library.base.IBasePresenter;
 import com.mvp.library.base.IBaseView;
 
@@ -12,7 +13,7 @@ import com.mvp.library.base.IBaseView;
 public interface IntroductionContract {
 
     interface View extends IBaseView<Presenter> {
-
+        void setIntroduction(Introduction introduction);
     }
 
     interface Presenter extends IBasePresenter {

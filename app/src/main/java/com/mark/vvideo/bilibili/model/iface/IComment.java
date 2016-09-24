@@ -14,6 +14,6 @@ import rx.Observable;
 
 public interface IComment {
 
-    Observable<List<Comment>> getComments(int aid, int page, int pageSize, int ver);
+    Observable<Comment> getComments(int aid, int page, int pageSize, int ver, String order);
 
 }
