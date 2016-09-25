@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.mark.vvideo.R;
@@ -63,5 +64,15 @@ public class DetailActivity extends BaseActivity {
         mViewpager.setOffscreenPageLimit(1);
         mViewpager.setAdapter(mAdapter);
         mTabs.setViewPager(mViewpager);
+        initEvent();
+    }
+
+    private void initEvent() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

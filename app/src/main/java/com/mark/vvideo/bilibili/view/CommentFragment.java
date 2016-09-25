@@ -39,9 +39,6 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @BindView(R.id.id_xRecyclerview)
     XRecyclerView mXRecyclerview;
 
-    @BindView(R.id.id_msg_et)
-    EditText mMsgEt;
-
     private String mAid;
 
     private int mPage = 1;

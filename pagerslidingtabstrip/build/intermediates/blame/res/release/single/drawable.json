@@ -1,14 +1,18 @@
 [
     {
-        "merged": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
-        "source": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
+        "merged": "/Users/Yan/Android/workspace/VVideo/E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
     },
     {
-        "merged": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
-        "source": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
+        "merged": "/Users/Yan/Android/workspace/VVideo/E:\\Users\\Yan\\Android\\workspace\\VVideo\\E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/E:\\Users\\Yan\\Android\\workspace\\VVideo\\E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
     },
     {
-        "merged": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
-        "source": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
+        "merged": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/build/intermediates/res/merged/release/drawable/psts_background_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/res/drawable/psts_background_tab.xml"
+    },
+    {
+        "merged": "/Users/Yan/Android/workspace/VVideo/E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\release\\drawable\\psts_background_tab.xml",
+        "source": "/Users/Yan/Android/workspace/VVideo/E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\res\\drawable\\psts_background_tab.xml"
     }
 ]

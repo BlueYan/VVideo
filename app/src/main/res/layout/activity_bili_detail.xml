@@ -91,6 +91,39 @@
         app:layout_anchorGravity="bottom|right|end"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="#FFFFFF"
+        >
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_emoji"
+            android:layout_marginLeft="10dp"
+            />
+
+
+        <EditText
+            android:id="@+id/id_msg_et"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="说点什么"
+            android:paddingLeft="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_send_grey"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

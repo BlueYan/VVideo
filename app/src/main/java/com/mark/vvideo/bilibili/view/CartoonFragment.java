@@ -36,6 +36,8 @@ public class CartoonFragment extends BaseLazyFragment {
 
     private CartoonAdapter mAdapter;
 
+    private boolean isPerpared = false;
+
     public static CartoonFragment newInstance(List<AllRank.VideosBean> videosBeens) {
         mVideosBeans = videosBeens;
         CartoonFragment mFragment = new CartoonFragment();
@@ -45,6 +47,8 @@ public class CartoonFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        isPerpared = true;
+        onLazyInit();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -59,14 +63,14 @@ public class CartoonFragment extends BaseLazyFragment {
         LogUtils.d("onCreateView");
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         mRv.setLayoutManager(manager);
+        mRv.setPullRefreshEnabled(false);
         if ( mAdapter == null ) {
             mAdapter = new CartoonAdapter(getContext(), mVideosBeans);
             mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
                 @Override
                 public void onClickListener(View view, int position) {
                     Intent intent = new Intent(getContext(), DetailActivity.class);
-                    LogUtils.d("aid = " + mVideosBeans.get(position).getAid());
-                    intent.putExtra("aid", mVideosBeans.get(position).getAid());
+                    intent.putExtra("aid", mVideosBeans.get(position -1).getAid());
                     startActivity(intent);
                 }
             });
@@ -76,6 +80,8 @@ public class CartoonFragment extends BaseLazyFragment {
 
     @Override
     protected void onLazyInit() {
-        LogUtils.d("lazy init");
+        if ( !isPerpared || !isVisible ) {
+            return;
+        }
     }
 }

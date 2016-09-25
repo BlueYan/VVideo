@@ -65,7 +65,7 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
         if (!isPrepared || !isVisible) {
             return;
         }
-       // mPresenter.getIntroduction(Integer.valueOf(mAid));
+        mPresenter.getIntroduction(Integer.valueOf(mAid));
     }
 
     @Override
