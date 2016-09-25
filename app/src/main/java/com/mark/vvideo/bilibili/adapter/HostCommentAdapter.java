@@ -14,27 +14,22 @@ import com.mvp.library.utils.TimeUtils;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static com.mvp.library.utils.TimeUtils.UNIT_MIN;
-import static com.mvp.library.utils.TimeUtils.UNIT_MSEC;
-import static com.mvp.library.utils.TimeUtils.UNIT_SEC;
-
 /**
  * Author: Mark.
- * Date: 2016/9/21.
+ * Date: 2016/9/25.
  * Function:
  */
 
-public class CommentAdapter extends CommonAdapter<Comment.ListBean> {
+public class HostCommentAdapter extends CommonAdapter<Comment.HotListBean> {
+
+    private static final String TAG = HostCommentAdapter.class.getSimpleName();
 
     private static int[] lv = new int[] {R.drawable.ic_lv0, R.drawable.ic_lv1, R.drawable.ic_lv2,
             R.drawable.ic_lv3, R.drawable.ic_lv4, R.drawable.ic_lv5, R.drawable.ic_lv6,
             R.drawable.ic_lv7, R.drawable.ic_lv8, R.drawable.ic_lv9};
 
-    private Context mContext;
-
-    public CommentAdapter(Context context, List<Comment.ListBean> list) {
+    public HostCommentAdapter(Context context, List<Comment.HotListBean> list) {
         super(context, list);
-        this.mContext = context;
     }
 
     @Override
@@ -43,7 +38,7 @@ public class CommentAdapter extends CommonAdapter<Comment.ListBean> {
     }
 
     @Override
-    public void onBindData(SuperViewHolder mHolder, int position, Comment.ListBean item) {
+    public void onBindData(SuperViewHolder mHolder, int position, Comment.HotListBean item) {
         mHolder.setImageUrlToSimpleDraweeView(R.id.id_simpleDraweeView, item.getFace())
                 .setText(R.id.id_tv_name, item.getNick())
                 .setText(R.id.id_tv_float,"#" + item.getLv())
@@ -54,14 +49,5 @@ public class CommentAdapter extends CommonAdapter<Comment.ListBean> {
                 .setText(R.id.id_tv_support_num, item.getGood()+"")
                 .setImageResource(R.id.id_iv_level, lv[item.getLevel_info().getCurrent_level()])
                 .setText(R.id.id_tv_msg, item.getMsg());
-        if ( item.getReply().size() != 0 ) {
-            ReplyCommentAdapter mAdapter =  new ReplyCommentAdapter(mContext, item.getReply());
-            RecyclerView mRecyclerview = (RecyclerView) mHolder.findView(R.id.id_reply_recyclerview);
-            LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
-            mRecyclerview.setLayoutManager(mLinearLayoutManager);
-            mRecyclerview.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-            mRecyclerview.setAdapter(mAdapter);
-        }
     }
-
 }

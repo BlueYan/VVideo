@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
 import com.mark.vvideo.bilibili.adapter.CommentAdapter;
+import com.mark.vvideo.bilibili.adapter.HostCommentAdapter;
 import com.mark.vvideo.bilibili.contract.CommentContract;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.presenter.CommentPresenter;
+import com.mark.vvideo.douyutv.contract.AllLiveContract;
 import com.mark.vvideo.util.DividerItemDecoration;
 import com.mvp.library.utils.LogUtils;
 
@@ -49,11 +52,17 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
 
     private CommentAdapter mAdapter;
 
+    private HostCommentAdapter mHostCommentAdapter; //热门评论适配器
+
     private Comment mComment;
 
     private CommentContract.Presenter mPresenter;
 
     private boolean isPerpared = false;
+
+    private View mHeaderView;
+
+    private RecyclerView mHeaderRecyclerView;
 
     public static CommentFragment newInstance(String aid) {
         CommentFragment mFragment = new CommentFragment();
@@ -75,6 +84,7 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
         mPresenter = new CommentPresenter(this);
         isPerpared = true;
         onLazyInit();
+        mHeaderView = inflater.inflate(R.layout.view_comment_header, container, false);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -99,10 +109,17 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
     @Override
     protected void initView() {
         LogUtils.d("CommentFragment initView");
+        DividerItemDecoration mDivider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
         LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
         mXRecyclerview.setLayoutManager(mLinearManager);
         mXRecyclerview.setPullRefreshEnabled(false);
-        mXRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mXRecyclerview.addItemDecoration(mDivider);
+
+        //初始化头部Recyclerview
+        LinearLayoutManager mHeaderLinearManager = new LinearLayoutManager(getContext()); //不能用同一个layout manager设置
+        mHeaderRecyclerView = (RecyclerView) mHeaderView.findViewById(R.id.id_header_recyclerview);
+        mHeaderRecyclerView.setLayoutManager(mHeaderLinearManager);
+        mHeaderRecyclerView.addItemDecoration(mDivider);
     }
 
 
@@ -122,7 +139,18 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
         if ( mAdapter == null ) {
             mAdapter = new CommentAdapter(getContext(), mComment.getList());
         }
+//        if ( mHostCommentAdapter == null ) {
+//            mHostCommentAdapter = new HostCommentAdapter(getContext(), mComment.getHotList());
+//            mHeaderRecyclerView.setAdapter(mHostCommentAdapter);
+//            mXRecyclerview.addHeaderView(mHeaderView); //添加热门评论作为头部view
+//        }
         LogUtils.d("set comments");
         mXRecyclerview.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
     }
 }

@@ -3,6 +3,7 @@ package com.mvp.library.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class TimeUtils {
@@ -163,6 +164,14 @@ public class TimeUtils {
     public static final int UNIT_MIN = 60000;
     public static final int UNIT_HOUR = 3600000;
     public static final int UNIT_DAY = 86400000;
+
+    public static final int FLAG_DAY = 1001;
+
+    public static final int FLAG_HOUR = 2002;
+
+    public static final int FLAG_MIN = 3003;
+
+    public static final int FLAG_SEC = 4004;
 
     /**
      * 将时间戳转为时间字符串
@@ -468,6 +477,32 @@ public class TimeUtils {
      */
     public static boolean isLeapYear(int year) {
         return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+    }
+
+    /**
+     * 获取两个时间差，精确到天、小时、分钟、秒
+     * @param time 字符串格式时间
+     * @param format 格式自己定义
+     * @return
+     */
+    public static String getDateDiff(String time, SimpleDateFormat format) {
+        long diff = getIntervalByNow(time, UNIT_MSEC, format);
+        long hour = 0; //小时
+        long min = 0; //分钟
+        long sec = 0; //秒
+        long day = 0; //天
+        day = diff / UNIT_DAY;// 计算差多少天
+        hour = diff % UNIT_DAY / UNIT_HOUR + day * 24;// 计算差多少小时
+        min = diff % UNIT_DAY % UNIT_HOUR / UNIT_MIN + day * 24 * 60;// 计算差多少分钟
+        sec = diff % UNIT_DAY % UNIT_HOUR % UNIT_MIN / UNIT_SEC;// 计算差多少秒
+        if ( day != 0 ) {
+            return day + "天前";
+        } else if ( hour != 0 ) {
+            return hour + "小时前";
+        } else if ( min != 0 ) {
+            return min + "分钟前";
+        }
+        return sec + "秒前";
     }
 
 }
