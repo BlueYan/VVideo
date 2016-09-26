@@ -4,6 +4,7 @@ import com.mark.vvideo.bilibili.model.entry.Comment;
 
 import java.util.List;
 
+import retrofit2.Call;
 import rx.Observable;
 
 /**
@@ -15,5 +16,7 @@ import rx.Observable;
 public interface IComment {
 
     Observable<Comment> getComments(int aid, int page, int pageSize, int ver, String order);
+
+    Call<String> getAllComments(int aid, int page, int pageSize, int ver, String order);
 
 }

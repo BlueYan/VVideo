@@ -31,6 +31,10 @@ public interface BiliApi {
     Observable<Comment> getComments(@Query("aid") int aid, @Query("page") int page,
                                           @Query("pagesize") int pageSize, @Query("ver") int ver, @Query("order") String order);
 
+    @GET("/feedback")
+    Call<String> getAllComments(@Query("aid") int aid, @Query("page") int page,
+                                    @Query("pagesize") int pageSize, @Query("ver") int ver, @Query("order") String order);
+
     //http://bilibili-service.daoapp.io/view/aid
     @GET("/view/{aid}")
     Observable<Introduction> getIntroductions(@Path("aid") int aid);

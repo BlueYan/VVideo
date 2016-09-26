@@ -6,6 +6,7 @@ import com.mark.vvideo.network.RetrofitManager;
 
 import java.util.List;
 
+import retrofit2.Call;
 import rx.Observable;
 
 /**
@@ -25,5 +26,10 @@ public class CommentImpl implements IComment {
     @Override
     public Observable<Comment> getComments(int aid, int page, int pageSize, int ver, String order) {
         return RetrofitManager.getInstance().getHostBiliApi().getComments(aid, page, pageSize, ver, order);
+    }
+
+    @Override
+    public Call<String> getAllComments(int aid, int page, int pageSize, int ver, String order) {
+        return RetrofitManager.getInstance().getHostBiliApi().getAllComments(aid, page, pageSize, ver, order);
     }
 }
