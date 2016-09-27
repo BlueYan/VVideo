@@ -15,7 +15,7 @@ import rx.Observable;
 public class IntroductionImpl implements IIntroduction {
 
     @Override
-    public Observable<Introduction> getVideoIntroduction(int aid) {
-        return RetrofitManager.getInstance().getBiliApi().getIntroductions(aid);
+    public Observable<String> getVideoIntroduction(int aid) {
+        return RetrofitManager.getInstance().getBiliApiWithNoGson().getIntroductions(aid);
     }
 }

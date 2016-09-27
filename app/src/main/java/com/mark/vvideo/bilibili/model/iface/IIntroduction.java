@@ -12,6 +12,6 @@ import rx.Observable;
 
 public interface IIntroduction {
 
-    Observable<Introduction> getVideoIntroduction(int aid);
+    Observable<String> getVideoIntroduction(int aid);
 
 }

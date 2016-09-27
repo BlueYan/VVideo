@@ -1,13 +1,339 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    android:background="#EAEAEA">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        >
+
+        <TextView
+            android:id="@+id/id_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            />
+
+
+        <TextView
+            android:id="@+id/id_tv_play_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:drawableLeft="@drawable/ic_info_views"
+            android:drawablePadding="5dp"
+            android:layout_below="@id/id_tv_title"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:tint="#71000000"
+            />
+
+        <TextView
+            android:id="@+id/id_tv_review_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:drawableLeft="@drawable/ic_info_danmakus"
+            android:drawablePadding="5dp"
+            android:layout_below="@id/id_tv_title"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/id_tv_play_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:tint="#71000000"
+            />
+
+        <TextView
+            android:id="@+id/id_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/id_tv_play_num"
+            android:layout_marginTop="10dp"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/id_ll_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/id_tv_desc"
+            android:layout_marginTop="10dp"
+            >
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/id_tv_share_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_tv_number"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#81C784"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/id_ib_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/daily_video_action_bg"
+                    android:src="@drawable/ic_share_green"
+                    android:layout_below="@id/id_tv_share_num"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享"
+                    android:layout_below="@id/id_ib_share"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/id_tv_coin_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_tv_number"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#FF9800"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/id_ib_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/daily_video_action_bg"
+                    android:src="@drawable/ic_coin"
+                    android:layout_below="@id/id_tv_coin_num"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="投硬币"
+                    android:layout_below="@id/id_ib_coin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/id_tv_collected_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_tv_number"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#fb7299"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/id_ib_collected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/daily_video_action_bg"
+                    android:src="@drawable/ic_collect"
+                    android:layout_below="@id/id_tv_collected_num"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收藏"
+                    android:layout_below="@id/id_ib_collected"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/id_tv_download_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_tv_number"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#81C784"
+                    android:visibility="invisible"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/id_ib_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/daily_video_action_bg"
+                    android:src="@drawable/ic_download"
+                    android:layout_below="@id/id_tv_download_num"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="缓存"
+                    android:layout_below="@id/id_ib_download"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/id_view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/id_ll_action"/>
+
+
+        <RelativeLayout
+            android:id="@+id/id_rl_author"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/id_view_line"
+            android:layout_marginTop="10dp"
+            >
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/id_sdv_author_header"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                fresco:placeholderImage="@drawable/bili_default_avatar"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:roundAsCircle="true"
+                />
+
+
+            <TextView
+                android:id="@+id/id_tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:layout_toRightOf="@id/id_sdv_author_header"
+                android:layout_marginLeft="15dp"
+                />
+
+            <TextView
+                android:id="@+id/id_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:layout_toRightOf="@id/id_sdv_author_header"
+                android:layout_below="@id/id_tv_author"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+关注"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_tv_rect"
+                android:gravity="center"
+                android:textColor="#fb7299"
+
+                />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/id_view_line_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_below="@id/id_rl_author"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/id_tv_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频相关"
+            android:layout_below="@id/id_view_line_2"
+            android:layout_marginTop="10dp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_tag_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/id_tv_video"
+            android:layout_marginTop="10dp"
+            />
+
+    </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
 

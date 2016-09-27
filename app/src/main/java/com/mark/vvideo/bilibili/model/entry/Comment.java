@@ -512,7 +512,7 @@ public class Comment {
             private int current_exp;
             private int current_level;
             private int current_min;
-            private int next_exp;
+           // private int next_exp;  //一直解析错误的源头，反正没用屏蔽掉
 
             public int getCurrent_exp() {
                 return current_exp;
@@ -538,13 +538,13 @@ public class Comment {
                 this.current_min = current_min;
             }
 
-            public int getNext_exp() {
-                return next_exp;
-            }
-
-            public void setNext_exp(int next_exp) {
-                this.next_exp = next_exp;
-            }
+//            public int getNext_exp() {
+//                return next_exp;
+//            }
+//
+//            public void setNext_exp(int next_exp) {
+//                this.next_exp = next_exp;
+//            }
         }
 
         public static class ReplyBean {

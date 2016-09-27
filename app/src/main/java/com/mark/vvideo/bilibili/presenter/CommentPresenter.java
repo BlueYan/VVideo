@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -79,8 +80,78 @@ public class CommentPresenter extends BasePresenterImpl implements CommentContra
 //                            JSONObject mJsonObject = new JSONObject(response.body().toString());
 //                            JSONArray mHostListJsonArray = mJsonObject.getJSONArray("hotList");
 //                            JSONArray mListJsonArray = mJsonObject.getJSONArray("list");
+//                            List<Comment.ListBean> mListBeans = new ArrayList<Comment.ListBean>();
 //                            for ( int i = 0; i < mListJsonArray.length(); i++ ) {
-//                                LogUtils.d("nick = " + mListJsonArray.getJSONObject(i).getString("nick"));
+//                                Comment.ListBean mListBean = new Comment.ListBean();
+//                                JSONObject mListBeanObject = mListJsonArray.getJSONObject(i);
+//                                mListBean.setMid(mListBeanObject.getInt("mid"));
+//                                mListBean.setLv(mListBeanObject.getInt("lv"));
+//                                mListBean.setFbid(mListBeanObject.getString("fbid"));
+//                                mListBean.setAd_check(mListBeanObject.getInt("ad_check"));
+//                                mListBean.setGood(mListBeanObject.getInt("good"));
+//                                mListBean.setIsgood(mListBeanObject.getInt("isgood"));
+//                                mListBean.setMsg(mListBeanObject.getString("msg"));
+//                                mListBean.setDevice(mListBeanObject.getString("device"));
+//                                mListBean.setCreate(mListBeanObject.getInt("create"));
+//                                mListBean.setCreate_at(mListBeanObject.getString("create_at"));
+//                                mListBean.setReply_count(mListBeanObject.getInt("reply_count"));
+//                                mListBean.setFace(mListBeanObject.getString("face"));
+//                                mListBean.setRank(mListBeanObject.getInt("rank"));
+//                                mListBean.setNick(mListBeanObject.getString("nick"));
+//                                mListBean.setSex(mListBeanObject.getString("sex"));
+//
+//                                Comment.ListBean.LevelInfoBean mLevelInfoBean
+//                                        = new Comment.ListBean.LevelInfoBean();
+//                                JSONObject mLevelInfoBeanObject =
+//                                        mListBeanObject.getJSONObject("level_info");
+//                                mLevelInfoBean.setCurrent_exp(mLevelInfoBeanObject.getInt("current_exp"));
+//                                mLevelInfoBean.setCurrent_level(mLevelInfoBeanObject.getInt("current_level"));
+//                                mLevelInfoBean.setCurrent_min(mLevelInfoBeanObject.getInt("current_min"));
+//                                mLevelInfoBean.setNext_exp(mLevelInfoBeanObject.getInt("next_exp"));
+//                                mListBean.setLevel_info(mLevelInfoBean);
+//
+//
+//                                JSONArray mReplyBeanArray = mListBeanObject.getJSONArray("reply");
+//                                List<Comment.ListBean.ReplyBean> mListReplyBeans
+//                                        = new ArrayList<Comment.ListBean.ReplyBean>();
+//                                for ( int j = 0; j < mReplyBeanArray.length(); j++ ) {
+//                                    Comment.ListBean.ReplyBean mReplyBean =
+//                                            new Comment.ListBean.ReplyBean();
+//                                    JSONObject mReplyBeanObject = mReplyBeanArray.getJSONObject(j);
+//                                    mReplyBean.setMid(mReplyBeanObject.getInt("mid"));
+//                                    mReplyBean.setLv(mReplyBeanObject.getInt("lv"));
+//                                    mReplyBean.setFbid(mReplyBeanObject.getString("fbid"));
+//                                    mReplyBean.setAd_check(mReplyBeanObject.getInt("ad_check"));
+//                                    mReplyBean.setGood(mReplyBeanObject.getInt("good"));
+//                                    mReplyBean.setIsgood(mReplyBeanObject.getInt("isgood"));
+//                                    mReplyBean.setMsg(mReplyBeanObject.getString("msg"));
+//                                    mReplyBean.setDevice(mReplyBeanObject.getString("device"));
+//                                    mReplyBean.setCreate(mReplyBeanObject.getInt("create"));
+//                                    mReplyBean.setCreate_at(mReplyBeanObject.getString("create_at"));
+//                                    mReplyBean.setReply_count(mReplyBeanObject.getInt("reply_count"));
+//                                    mReplyBean.setFace(mReplyBeanObject.getString("face"));
+//                                    mReplyBean.setRank(mReplyBeanObject.getInt("rank"));
+//                                    mReplyBean.setNick(mReplyBeanObject.getString("nick"));
+//                                    mReplyBean.setSex(mReplyBeanObject.getString("sex"));
+//
+//
+//                                    Comment.ListBean.ReplyBean.LevelInfoBean mReplyLevelInfoBean
+//                                            = new Comment.ListBean.ReplyBean.LevelInfoBean();
+//                                    JSONObject mReplyLevelInfoBeanObject = mReplyBeanObject.getJSONObject("level_info");
+//
+//                                    mReplyLevelInfoBean.setCurrent_exp(mReplyLevelInfoBeanObject.getInt("current_exp"));
+//                                    mReplyLevelInfoBean.setCurrent_level(mReplyLevelInfoBeanObject.getInt("current_level"));
+//                                    mReplyLevelInfoBean.setCurrent_min(mReplyLevelInfoBeanObject.getInt("current_min"));
+//                                    mReplyLevelInfoBean.setNext_exp(mReplyLevelInfoBeanObject.getInt("next_exp"));
+//                                    mReplyBean.setLevel_info(mReplyLevelInfoBean);
+//
+//                                    mListReplyBeans.add(mReplyBean);
+//
+//                                }
+//
+//                                mListBean.setReply(mListReplyBeans);
+//
+//
 //                            }
 //
 //                        } catch (JSONException e) {

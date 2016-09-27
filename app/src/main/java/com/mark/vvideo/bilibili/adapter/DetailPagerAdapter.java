@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.mark.vvideo.bilibili.model.entry.Introduction;
 import com.mark.vvideo.bilibili.view.CommentFragment;
 import com.mark.vvideo.bilibili.view.IntroductionFragment;
 import com.mvp.library.utils.LogUtils;
@@ -20,16 +21,19 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
 
     private String mAid;
 
-    public DetailPagerAdapter(FragmentManager fm, String mAid) {
+    private Introduction mIntroduction;
+
+    public DetailPagerAdapter(FragmentManager fm, String mAid, Introduction introduction) {
         super(fm);
         this.mAid = mAid;
+        this.mIntroduction = introduction;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch ( position ) {
             case 0:
-                return IntroductionFragment.newInstance(mAid);
+                return IntroductionFragment.newInstance(mIntroduction, mAid);
             case 1:
                 return CommentFragment.newInstance(mAid);
         }

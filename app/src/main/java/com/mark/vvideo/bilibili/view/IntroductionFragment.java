@@ -2,17 +2,32 @@ package com.mark.vvideo.bilibili.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
+import com.mark.vvideo.bilibili.adapter.TagAdapter;
 import com.mark.vvideo.bilibili.contract.IntroductionContract;
+import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.model.entry.Introduction;
+import com.mark.vvideo.bilibili.model.entry.Tag;
 import com.mark.vvideo.bilibili.presenter.IntroductionPresenter;
+import com.mark.vvideo.util.Utils;
 import com.mvp.library.utils.LogUtils;
+import com.mvp.library.utils.TimeUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +38,63 @@ import butterknife.ButterKnife;
  * Function: 简介界面
  */
 
-public class IntroductionFragment extends BaseLazyFragment implements IntroductionContract.View {
+public class IntroductionFragment extends BaseLazyFragment{
 
     private static final String TAG = IntroductionFragment.class.getSimpleName();
 
-    @BindView(R.id.textView)
-    TextView mTitleView;
+    @BindView(R.id.id_tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.id_tv_play_num)
+    TextView mTvPlayNum;
+
+    @BindView(R.id.id_tv_review_num)
+    TextView mTvReviewNum;
+
+    @BindView(R.id.id_tv_desc)
+    TextView mTvDesc;
+
+    @BindView(R.id.id_tv_share_num)
+    TextView mTvShareNum;
+
+    @BindView(R.id.id_ib_share)
+    ImageButton mIbShare;
+
+    @BindView(R.id.id_tv_coin_num)
+    TextView mTvCoinNum;
+
+    @BindView(R.id.id_ib_coin)
+    ImageButton mIbCoin;
+
+    @BindView(R.id.id_tv_collected_num)
+    TextView mTvCollectedNum;
+
+    @BindView(R.id.id_ib_collected)
+    ImageButton mIbCollected;
+
+    @BindView(R.id.id_tv_download_num)
+    TextView mTvDownloadNum;
+
+    @BindView(R.id.id_ib_download)
+    ImageButton mIbDownload;
+
+    @BindView(R.id.id_sdv_author_header)
+    SimpleDraweeView mSdvAuthorHeader;
+
+    @BindView(R.id.id_tv_author)
+    TextView mTvAuthor;
+
+    @BindView(R.id.id_tv_time)
+    TextView mTvTime;
+
+    @BindView(R.id.id_ll_action)
+    LinearLayout idLlAction;
+
+    @BindView(R.id.id_view_line)
+    View idViewLine;
+
+    @BindView(R.id.id_tag_recyclerview)
+    RecyclerView mTagRecyclerview;
 
     private boolean isPrepared = false;
 
@@ -36,10 +102,15 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
 
     private String mAid;
 
-    public static IntroductionFragment newInstance(String aid) {
+    private TagAdapter mTagAdapter;
+
+    private Introduction mIntroduction;
+
+    public static IntroductionFragment newInstance(Introduction introduction, String aid) {
         IntroductionFragment mFragment = new IntroductionFragment();
         Bundle args = new Bundle();
         args.putString("aid", aid);
+        args.putParcelable("introduction", introduction);
         mFragment.setArguments(args);
         return mFragment;
     }
@@ -47,6 +118,8 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mAid = getArguments().getString("aid");
+        mIntroduction = getArguments().getParcelable("introduction");
+        LogUtils.d("introduction = " + mIntroduction.toString());
         super.onCreate(savedInstanceState);
 
     }
@@ -54,7 +127,7 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPresenter = new IntroductionPresenter(this);
+        //mPresenter = new IntroductionPresenter(this);
         isPrepared = true;
         onLazyInit();
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -65,7 +138,8 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
         if (!isPrepared || !isVisible) {
             return;
         }
-        mPresenter.getIntroduction(Integer.valueOf(mAid));
+        //mPresenter.getIntroduction(Integer.valueOf(mAid));
+        LogUtils.d("lazy init");
     }
 
     @Override
@@ -75,17 +149,41 @@ public class IntroductionFragment extends BaseLazyFragment implements Introducti
 
     @Override
     protected void initView() {
-
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        //StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        mTagRecyclerview.setLayoutManager(mLayoutManager);
+        setIntroduction(mIntroduction);
     }
 
-    @Override
-    public void setPresenter(IntroductionContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
+//    @Override
+//    public void setPresenter(IntroductionContract.Presenter presenter) {
+//        this.mPresenter = presenter;
+//    }
 
-    @Override
+    //@Override
     public void setIntroduction(Introduction introduction) {
-        LogUtils.d("introduction.title = " + introduction.getTitle());
-        mTitleView.setText(introduction.getTitle());
+        mTvTitle.setText(introduction.getTitle());
+        mTvPlayNum.setText(Utils.parseNumber(Integer.valueOf(introduction.getPlay())));
+        mTvReviewNum.setText(Utils.parseNumber(Integer.valueOf(introduction.getVideoReview())));
+        mTvDesc.setText(introduction.getDescription());
+        mTvShareNum.setText(introduction.getReview());
+        mTvCoinNum.setText(introduction.getCoins());
+        mTvCollectedNum.setText(introduction.getFavorites());
+        mSdvAuthorHeader.setImageURI(introduction.getFace());
+        mTvAuthor.setText(introduction.getAuthor());
+        mTvTime.setText(TimeUtils.getDateDiff(introduction.getCreatedAt(),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm")) + "投稿");
+
+        String tagArray[] = introduction.getTag().split(",");
+        List<Tag> mTags = new ArrayList<Tag>();
+        for ( int i = 0; i < tagArray.length; i++ ) {
+            Tag mTag = new Tag(tagArray[i]);
+            mTags.add(mTag);
+        }
+        if ( mTagAdapter == null ) {
+            mTagAdapter = new TagAdapter(getContext(), mTags);
+            mTagRecyclerview.setAdapter(mTagAdapter);
+        }
     }
+
 }

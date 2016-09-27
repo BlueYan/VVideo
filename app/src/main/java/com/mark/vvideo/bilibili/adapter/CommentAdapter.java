@@ -59,7 +59,6 @@ public class CommentAdapter extends CommonAdapter<Comment.ListBean> {
             RecyclerView mRecyclerview = (RecyclerView) mHolder.findView(R.id.id_reply_recyclerview);
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
             mRecyclerview.setLayoutManager(mLinearLayoutManager);
-            mRecyclerview.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
             mRecyclerview.setAdapter(mAdapter);
         }
     }

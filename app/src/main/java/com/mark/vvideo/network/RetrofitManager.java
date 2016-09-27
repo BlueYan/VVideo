@@ -33,6 +33,8 @@ public class RetrofitManager {
 
     private static BiliApi mHostBiliApi = null;
 
+    private static BiliApi mBiliApiWithNoGson = null;
+
     private static DouyuApi mDouyuApi = null;
 
     public static RetrofitManager getInstance() {
@@ -84,6 +86,23 @@ public class RetrofitManager {
             }
         }
         return mHostBiliApi;
+    }
+
+    public BiliApi getBiliApiWithNoGson() {
+        if ( mBiliApiWithNoGson == null ) {
+            synchronized (BiliApi.class) {
+                if ( mBiliApiWithNoGson == null ) {
+                    mBiliApiWithNoGson = new Retrofit.Builder()
+                            .baseUrl("http://bilibili-service.daoapp.io")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .client(createOkHttpClient())
+                            .build()
+                            .create(BiliApi.class);
+                }
+            }
+        }
+        return mBiliApiWithNoGson;
     }
 
     /**

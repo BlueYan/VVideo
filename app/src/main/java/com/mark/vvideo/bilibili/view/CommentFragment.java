@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
@@ -51,7 +52,7 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
 
     private HostCommentAdapter mHostCommentAdapter; //热门评论适配器
 
-    private Comment mComment;
+    private List<Comment.ListBean> mListBeans;
 
     private CommentContract.Presenter mPresenter;
 
@@ -110,7 +111,22 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
         LinearLayoutManager mLinearManager = new LinearLayoutManager(getContext());
         mXRecyclerview.setLayoutManager(mLinearManager);
         mXRecyclerview.setPullRefreshEnabled(false);
+        mXRecyclerview.setLoadingMoreEnabled(true);
+        mXRecyclerview.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        mXRecyclerview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPage = mPage + 1;
+                mPresenter.getComments(Integer.valueOf(mAid), mPage, mPageSize, mVer, "hot");
+            }
+        });
         mXRecyclerview.addItemDecoration(mDivider);
+
 
         //初始化头部Recyclerview
         LinearLayoutManager mHeaderLinearManager = new LinearLayoutManager(getContext()); //不能用同一个layout manager设置
@@ -131,18 +147,19 @@ public class CommentFragment extends BaseLazyFragment implements CommentContract
      */
     @Override
     public void setComments(Comment mComment) {
-        this.mComment = mComment;
-
         if ( mAdapter == null ) {
-            mAdapter = new CommentAdapter(getContext(), mComment.getList());
+            this.mListBeans = mComment.getList();
+            mAdapter = new CommentAdapter(getContext(), mListBeans);
+            mXRecyclerview.setAdapter(mAdapter);
+        } else {
+            mAdapter.addAll(mListBeans.size(), mComment.getList());
+            mXRecyclerview.loadMoreComplete();
         }
 //        if ( mHostCommentAdapter == null ) {
 //            mHostCommentAdapter = new HostCommentAdapter(getContext(), mComment.getHotList());
 //            mHeaderRecyclerView.setAdapter(mHostCommentAdapter);
 //            mXRecyclerview.addHeaderView(mHeaderView); //添加热门评论作为头部view
 //        }
-        LogUtils.d("set comments");
-        mXRecyclerview.setAdapter(mAdapter);
     }
 
     @Override

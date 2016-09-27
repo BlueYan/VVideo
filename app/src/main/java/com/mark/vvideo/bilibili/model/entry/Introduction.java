@@ -1,58 +1,91 @@
 package com.mark.vvideo.bilibili.model.entry;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Author: Mark.
  * Date: 2016/9/22.
  * Function: 视频简介
  */
 
-public class Introduction {
+public class Introduction implements Parcelable {
 
+    /**
+     * page : 1
+     * type : vupload
+     * part : Food War2 13
+     * cid : 10400078
+     * vid : 0
+     */
 
+    private ListBean ListBean;
     /**
      * tid : 33
      * typename : 连载动画
      * arctype : Copy
-     * play : 3818734
-     * review : 53572
-     * video_review : 227686
-     * favorites : 2470
-     * title : 【4月】Re：从零开始的异世界生活 19
-     * description : #19 白鲸攻略战
-     * tag : TV动画,BILIBILI正版,RE：从零开始的异世界生活,从零开始的异世界生活
-     * pic : http://i2.hdslb.com/bfs/archive/a0656101763a68a4bcb3fe603496037c253e106d.jpg
-     * author : TV-TOKYO
-     * mid : 21453565
-     * face : http://i0.hdslb.com/bfs/face/69ef6861067d6ef637b7c73b77d71c3414996745.jpg
+     * play : 1293522
+     * review : 44
+     * video_review : 58447
+     * favorites : 1045
+     * title : 【7月/完结】食戟之灵 贰之皿 13
+     * description : #13 威风堂堂
+     * tag : TV动画,BILIBILI正版,食戟之灵 贰之皿,食戟之灵 第二季
+     * pic : http://i0.hdslb.com/bfs/archive/9fc8e0b22c2b75b602439acee5684e2583e485aa.jpg
+     * author : 哔哩哔哩番剧
+     * mid : 928123
+     * face : http://i1.hdslb.com/bfs/face/60a9153609998b04301dc5b8ed44c41b537a2268.jpg
      * pages : 1
-     * created_at : 2016-08-08 01:05
-     * coins : 18527
-     * list : {"0":{"page":1,"type":"vupload","part":"ReZERO_19","cid":9253164,"vid":0}}
+     * created_at : 2016-09-24 22:00
+     * coins : 7667
      */
 
+    @SerializedName("tid")
     private int tid;
+    @SerializedName("typename")
     private String typename;
+    @SerializedName("arctype")
     private String arctype;
+    @SerializedName("play")
     private String play;
+    @SerializedName("review")
     private String review;
-    private String video_review;
+    @SerializedName("video_review")
+    private String videoReview;
+    @SerializedName("favorites")
     private String favorites;
+    @SerializedName("title")
     private String title;
+    @SerializedName("description")
     private String description;
+    @SerializedName("tag")
     private String tag;
+    @SerializedName("pic")
     private String pic;
+    @SerializedName("author")
     private String author;
+    @SerializedName("mid")
     private String mid;
+    @SerializedName("face")
     private String face;
+    @SerializedName("pages")
     private int pages;
-    private String created_at;
+    @SerializedName("created_at")
+    private String createdAt;
+    @SerializedName("coins")
     private String coins;
-    /**
-     * 0 : {"page":1,"type":"vupload","part":"ReZERO_19","cid":9253164,"vid":0}
-     */
 
-   // private ListBean list;
+    public ListBean getListBean() {
+        return ListBean;
+    }
 
+    public void setListBean(ListBean ListBean) {
+        this.ListBean = ListBean;
+    }
 
     public int getTid() {
         return tid;
@@ -94,12 +127,12 @@ public class Introduction {
         this.review = review;
     }
 
-    public String getVideo_review() {
-        return video_review;
+    public String getVideoReview() {
+        return videoReview;
     }
 
-    public void setVideo_review(String video_review) {
-        this.video_review = video_review;
+    public void setVideoReview(String videoReview) {
+        this.videoReview = videoReview;
     }
 
     public String getFavorites() {
@@ -174,12 +207,12 @@ public class Introduction {
         this.pages = pages;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getCoins() {
@@ -191,14 +224,94 @@ public class Introduction {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeInt(this.tid);
+        dest.writeString(this.typename);
+        dest.writeString(this.arctype);
+        dest.writeString(this.play);
+        dest.writeString(this.review);
+        dest.writeString(this.videoReview);
+        dest.writeString(this.favorites);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.tag);
+        dest.writeString(this.pic);
+        dest.writeString(this.author);
+        dest.writeString(this.mid);
+        dest.writeString(this.face);
+        dest.writeInt(this.pages);
+        dest.writeString(this.createdAt);
+        dest.writeString(this.coins);
+    }
+
+    public static class ListBean {
+        @SerializedName("page")
+        private int page;
+        @SerializedName("type")
+        private String type;
+        @SerializedName("part")
+        private String part;
+        @SerializedName("cid")
+        private int cid;
+        @SerializedName("vid")
+        private int vid;
+
+        public int getPage() {
+            return page;
+        }
+
+        public void setPage(int page) {
+            this.page = page;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getPart() {
+            return part;
+        }
+
+        public void setPart(String part) {
+            this.part = part;
+        }
+
+        public int getCid() {
+            return cid;
+        }
+
+        public void setCid(int cid) {
+            this.cid = cid;
+        }
+
+        public int getVid() {
+            return vid;
+        }
+
+        public void setVid(int vid) {
+            this.vid = vid;
+        }
+    }
+
+    @Override
     public String toString() {
         return "Introduction{" +
-                "tid=" + tid +
+                "ListBean=" + ListBean +
+                ", tid=" + tid +
                 ", typename='" + typename + '\'' +
                 ", arctype='" + arctype + '\'' +
                 ", play='" + play + '\'' +
                 ", review='" + review + '\'' +
-                ", video_review='" + video_review + '\'' +
+                ", videoReview='" + videoReview + '\'' +
                 ", favorites='" + favorites + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -208,7 +321,7 @@ public class Introduction {
                 ", mid='" + mid + '\'' +
                 ", face='" + face + '\'' +
                 ", pages=" + pages +
-                ", created_at='" + created_at + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 ", coins='" + coins + '\'' +
                 '}';
     }

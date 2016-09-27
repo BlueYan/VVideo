@@ -37,5 +37,5 @@ public interface BiliApi {
 
     //http://bilibili-service.daoapp.io/view/aid
     @GET("/view/{aid}")
-    Observable<Introduction> getIntroductions(@Path("aid") int aid);
+    Observable<String> getIntroductions(@Path("aid") int aid);
 }
