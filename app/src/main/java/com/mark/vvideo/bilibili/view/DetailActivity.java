@@ -178,6 +178,8 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.DetailActivity_Title);
     }
 
+
+
     @Override
     public void setVideoInfo(VideoInfo videoInfo) {
         LogUtils.d("set video info");
