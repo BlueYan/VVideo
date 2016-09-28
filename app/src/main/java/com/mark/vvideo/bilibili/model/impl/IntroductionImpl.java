@@ -1,6 +1,7 @@
 package com.mark.vvideo.bilibili.model.impl;
 
 import com.mark.vvideo.bilibili.model.entry.Introduction;
+import com.mark.vvideo.bilibili.model.entry.VideoInfo;
 import com.mark.vvideo.bilibili.model.iface.IIntroduction;
 import com.mark.vvideo.network.RetrofitManager;
 
@@ -17,5 +18,10 @@ public class IntroductionImpl implements IIntroduction {
     @Override
     public Observable<String> getVideoIntroduction(int aid) {
         return RetrofitManager.getInstance().getBiliApiWithNoGson().getIntroductions(aid);
+    }
+
+    @Override
+    public Observable<VideoInfo> getVideoInfo(int cid) {
+        return RetrofitManager.getInstance().getBiliApi().getVideoInfo(cid);
     }
 }

@@ -1,6 +1,10 @@
 [
     {
-        "merged": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/build/intermediates/res/merged/androidTest/debug/drawable/psts_background_tab.xml",
-        "source": "/Users/Yan/Android/workspace/VVideo/pagerslidingtabstrip/build/intermediates/bundles/debug/res/drawable/psts_background_tab.xml"
+        "merged": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\psts_background_tab.xml",
+        "source": "E:\\Users\\Yan\\Android\\workspace\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\bundles\\debug\\res\\drawable\\psts_background_tab.xml"
+    },
+    {
+        "merged": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\psts_background_tab.xml",
+        "source": "E:\\Android\\Project\\VVideo\\pagerslidingtabstrip\\build\\intermediates\\bundles\\debug\\res\\drawable\\psts_background_tab.xml"
     }
 ]

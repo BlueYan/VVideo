@@ -3,6 +3,7 @@ package com.mark.vvideo.network.api;
 import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.model.entry.Introduction;
+import com.mark.vvideo.bilibili.model.entry.VideoInfo;
 
 import java.util.List;
 
@@ -38,4 +39,8 @@ public interface BiliApi {
     //http://bilibili-service.daoapp.io/view/aid
     @GET("/view/{aid}")
     Observable<String> getIntroductions(@Path("aid") int aid);
+
+
+    @GET("/video/{cid}")
+    Observable<VideoInfo> getVideoInfo(@Path("cid") int cid);
 }

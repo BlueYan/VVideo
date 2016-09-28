@@ -3,6 +3,7 @@ package com.mark.vvideo.bilibili.presenter;
 import com.google.gson.JsonObject;
 import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.model.entry.Introduction;
+import com.mark.vvideo.bilibili.model.entry.VideoInfo;
 import com.mark.vvideo.bilibili.model.iface.IIntroduction;
 import com.mark.vvideo.bilibili.model.impl.IntroductionImpl;
 import com.mvp.library.base.BasePresenterImpl;
@@ -104,6 +105,30 @@ public class IntroductionPresenter extends BasePresenterImpl implements Introduc
                     }
                 });
 
+        addSubscription(subscription);
+    }
+
+    @Override
+    public void getVideoInfo(int cid) {
+        Subscription subscription = mIntroduction.getVideoInfo(cid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<VideoInfo>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(VideoInfo videoInfo) {
+                        mView.setVideoInfo(videoInfo);
+                    }
+                });
         addSubscription(subscription);
     }
 
