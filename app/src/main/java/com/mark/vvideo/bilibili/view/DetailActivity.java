@@ -145,6 +145,8 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
                 return false;
             }
         });
+
+
     }
 
     private void initEvent() {
