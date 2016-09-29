@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#000000"
+        android:alpha="0.5"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/id_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bili_player_play_can_play"
+            />
+
+
+        <TextView
+            android:id="@+id/id_tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="5dp"
+            />
+
+        <SeekBar
+            android:id="@+id/id_sb_process"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:progressDrawable="?attr/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/id_tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="5dp"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_portrait_fullscreen"
+            android:layout_marginLeft="5dp"
+            />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

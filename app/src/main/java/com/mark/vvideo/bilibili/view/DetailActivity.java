@@ -26,6 +26,7 @@ import com.mark.vvideo.bilibili.model.entry.Introduction;
 import com.mark.vvideo.bilibili.model.entry.VideoInfo;
 import com.mark.vvideo.bilibili.presenter.IntroductionPresenter;
 import com.mark.vvideo.widget.media.AndroidMediaController;
+import com.mark.vvideo.widget.media.CustomMediaController;
 import com.mark.vvideo.widget.media.IjkVideoView;
 import com.mvp.library.utils.LogUtils;
 
@@ -39,7 +40,9 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Date: 2016/9/20.
  * Function:
  */
-public class DetailActivity extends BaseActivity implements IntroductionContract.View {
+public class DetailActivity extends BaseActivity implements IntroductionContract.View,
+        IMediaPlayer.OnErrorListener, IMediaPlayer.OnPreparedListener, IMediaPlayer.OnInfoListener,
+            IMediaPlayer.OnCompletionListener {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -105,9 +108,13 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
 
     private boolean mBackPressed;
 
-    private AndroidMediaController mMediaController; //控制器
+    //private AndroidMediaController mMediaController; //控制器
+
+    private CustomMediaController mMediaController;
 
     private AnimationDrawable mLoadingAnim; //动画
+
+    private int mLastPosition = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,17 +143,13 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         //init ijk library
         IjkMediaPlayer.loadLibrariesOnce(null);
         IjkMediaPlayer.native_profileBegin("libijkplayer.so");
-        mMediaController = new AndroidMediaController(this, false);
+        //mMediaController = new AndroidMediaController(this, false);
+        mMediaController = new CustomMediaController(this);
         mIjkplayerView.setMediaController(mMediaController);
-
-        mIjkplayerView.setOnErrorListener(new IMediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
-                return false;
-            }
-        });
-
-
+        mIjkplayerView.setOnPreparedListener(this);
+        mIjkplayerView.setOnInfoListener(this);
+        mIjkplayerView.setOnCompletionListener(this);
+        mIjkplayerView.setOnErrorListener(this);
     }
 
     private void initEvent() {
@@ -160,6 +163,10 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
             @Override
             public void onClick(View view) {
                 mSdvPic.setVisibility(View.GONE);
+                mVideoView.setVisibility(View.VISIBLE);
+                mVideoStart.setVisibility(View.VISIBLE);
+                mLoadingAnim = (AnimationDrawable) mBiliAnim.getBackground();
+                mLoadingAnim.start();
                 mPresenter.getVideoInfo(mIntroduction.getListBean().getCid());
             }
         });
@@ -181,35 +188,16 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     }
 
 
-
+    /**
+     * 设置播放路径，开始播放
+     * @param videoInfo
+     */
     @Override
     public void setVideoInfo(VideoInfo videoInfo) {
         LogUtils.d("set video info");
         mVideoUrl = videoInfo.getDurl().get(0).getUrl();
         if (mIjkplayerView != null) {
-            mIjkplayerView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(IMediaPlayer iMediaPlayer) {
-                    LogUtils.d("onPrepared");
-                    bufferingIndicator.setVisibility(View.VISIBLE);
-                    mVideoStart.setVisibility(View.VISIBLE);
-                    mLoadingAnim = (AnimationDrawable) mBiliAnim.getBackground();
-                    mLoadingAnim.start();
-                }
-            });
-            mIjkplayerView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
-                @Override
-                public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int extra) {
-
-                    return false;
-                }
-            });
-            mIjkplayerView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(IMediaPlayer iMediaPlayer) {
-                    LogUtils.d("onCompletion");
-                }
-            });
+            mCollapsingToolbar.setTitle(" ");
             mIjkplayerView.setVideoPath(mVideoUrl);
             mIjkplayerView.start(); //开始播放
         }
@@ -227,9 +215,26 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if ( mIjkplayerView != null && !mIjkplayerView.isPlaying() ) {
+            mIjkplayerView.seekTo(mLastPosition);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if ( mIjkplayerView != null ) {
+            mLastPosition = mIjkplayerView.getCurrentPosition();  //记录当前视频位置
+            mIjkplayerView.pause();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        if (mBackPressed || !mIjkplayerView.isBackgroundPlayEnabled()) {
+        if ( mBackPressed || !mIjkplayerView.isBackgroundPlayEnabled() ) {
             mIjkplayerView.stopPlayback();
             mIjkplayerView.release(true);
             mIjkplayerView.stopBackgroundPlay();
@@ -237,6 +242,71 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
             mIjkplayerView.enterBackground();
         }
         IjkMediaPlayer.native_profileEnd();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if ( mLoadingAnim != null ) {
+            mLoadingAnim.stop();
+            mLoadingAnim = null;
+        }
+    }
+
+    /**
+     * 视频播放错误
+     * @param iMediaPlayer
+     * @param i
+     * @param i1
+     * @return
+     */
+    @Override
+    public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+        return false;
+    }
+
+    /**
+     * 播放视频准备
+     * @param iMediaPlayer
+     */
+    @Override
+    public void onPrepared(IMediaPlayer iMediaPlayer) {
+        LogUtils.d("on prepared");
+        mLoadingAnim.stop(); //停止动画
+        mVideoStart.setVisibility(View.GONE);
+    }
+
+    /**
+     *
+     * 视频缓冲
+     * @param iMediaPlayer
+     * @param what
+     * @param i1
+     * @return
+     */
+    @Override
+    public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int i1) {
+        if ( what == iMediaPlayer.MEDIA_INFO_BUFFERING_START ) {
+            if ( bufferingIndicator != null ) {
+                LogUtils.d("visible");
+                bufferingIndicator.setVisibility(View.VISIBLE);
+            }
+        } else if ( what == iMediaPlayer.MEDIA_INFO_BUFFERING_END ) {
+            if ( bufferingIndicator != null && bufferingIndicator.getVisibility() == View.VISIBLE ) {
+                LogUtils.d("gone");
+                bufferingIndicator.setVisibility(View.GONE);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 视频播放完成
+     * @param iMediaPlayer
+     */
+    @Override
+    public void onCompletion(IMediaPlayer iMediaPlayer) {
 
     }
 }
