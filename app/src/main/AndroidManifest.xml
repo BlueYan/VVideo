@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".bilibili.view.DetailActivity"/>
+        <activity android:name=".bilibili.view.DetailActivity"
+            android:configChanges="orientation|screenSize"
+            />
 
     </application>
 

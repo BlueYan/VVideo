@@ -355,6 +355,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             mMediaController.hide();
         }
         mMediaController = controller;
+        //mMediaController.setMediaPlayer(mMediaPlayer); //额外增加,需要将播放器设置到controller
         attachMediaController();
     }
 
@@ -571,7 +572,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
             mSeekEndTime = System.currentTimeMillis();
-            mHudViewHolder.updateSeekCost(mSeekEndTime - mSeekStartTime);
+            //mHudViewHolder.updateSeekCost(mSeekEndTime - mSeekStartTime);
         }
     };
 
@@ -941,6 +942,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             return null;
 
         return mMediaPlayer.getTrackInfo();
+    }
+
+    public IMediaPlayer getPlayer() {
+        return mMediaPlayer;
     }
 
     public void selectTrack(int stream) {

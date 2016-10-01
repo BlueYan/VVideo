@@ -19,6 +19,8 @@ package com.mark.vvideo.widget.media;
 import android.view.View;
 import android.widget.MediaController;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+
 public interface IMediaController {
     void hide();
 
@@ -38,4 +40,9 @@ public interface IMediaController {
     // Extends
     //----------
     void showOnce(View view);
+
+    /**
+     * Extends
+     */
+    //void setMediaPlayer(IMediaPlayer player);
 }

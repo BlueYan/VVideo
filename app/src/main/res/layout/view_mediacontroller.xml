@@ -51,6 +51,7 @@
 
 
         <ImageView
+            android:id="@+id/id_iv_full_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_portrait_fullscreen"

@@ -1,5 +1,6 @@
 package com.mark.vvideo.bilibili.view;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -29,6 +31,8 @@ import com.mark.vvideo.widget.media.AndroidMediaController;
 import com.mark.vvideo.widget.media.CustomMediaController;
 import com.mark.vvideo.widget.media.IjkVideoView;
 import com.mvp.library.utils.LogUtils;
+import com.mvp.library.utils.ScreenUtils;
+import com.mvp.library.utils.SizeUtils;
 
 import butterknife.BindView;
 import master.flame.danmaku.ui.widget.DanmakuView;
@@ -42,7 +46,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  */
 public class DetailActivity extends BaseActivity implements IntroductionContract.View,
         IMediaPlayer.OnErrorListener, IMediaPlayer.OnPreparedListener, IMediaPlayer.OnInfoListener,
-            IMediaPlayer.OnCompletionListener {
+            IMediaPlayer.OnCompletionListener, CustomMediaController.OnOrientationChangeListener {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -80,7 +84,7 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     TextView mVideoStartInfo;
 
     @BindView(R.id.id_appbarLayout)
-    AppBarLayout idAppbarLayout;
+    AppBarLayout mAppbarLayout;
 
     @BindView(R.id.id_cl)
     CoordinatorLayout idCl;
@@ -143,8 +147,8 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         //init ijk library
         IjkMediaPlayer.loadLibrariesOnce(null);
         IjkMediaPlayer.native_profileBegin("libijkplayer.so");
-        //mMediaController = new AndroidMediaController(this, false);
         mMediaController = new CustomMediaController(this);
+        mMediaController.setOnOrientationChangeListener(this);
         mIjkplayerView.setMediaController(mMediaController);
         mIjkplayerView.setOnPreparedListener(this);
         mIjkplayerView.setOnInfoListener(this);
@@ -252,6 +256,9 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
             mLoadingAnim.stop();
             mLoadingAnim = null;
         }
+        if ( mMediaController != null ) {
+            mMediaController.onDestroy();
+        }
     }
 
     /**
@@ -263,6 +270,7 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
      */
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+        LogUtils.d("i = " + i + " i1 = " + i1);
         return false;
     }
 
@@ -289,12 +297,10 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int i1) {
         if ( what == iMediaPlayer.MEDIA_INFO_BUFFERING_START ) {
             if ( bufferingIndicator != null ) {
-                LogUtils.d("visible");
                 bufferingIndicator.setVisibility(View.VISIBLE);
             }
         } else if ( what == iMediaPlayer.MEDIA_INFO_BUFFERING_END ) {
             if ( bufferingIndicator != null && bufferingIndicator.getVisibility() == View.VISIBLE ) {
-                LogUtils.d("gone");
                 bufferingIndicator.setVisibility(View.GONE);
             }
         }
@@ -308,5 +314,25 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     @Override
     public void onCompletion(IMediaPlayer iMediaPlayer) {
 
+    }
+
+    /**
+     * 动态切换横竖屏
+     * @param screen
+     */
+    @Override
+    public void onChangeListener(int screen) {
+        LogUtils.d("screen = " + screen);
+        if ( screen == CustomMediaController.SCREEN_PROTRAIT ) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            CoordinatorLayout.LayoutParams mProtraitLayoutParams
+                    = new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(this, 200));
+            mAppbarLayout.setLayoutParams(mProtraitLayoutParams);
+        } else if ( screen == CustomMediaController.SCREEN_LANDSCAPE ) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            CoordinatorLayout.LayoutParams mProtraitLayoutParams
+                    = new CoordinatorLayout.LayoutParams(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
+            mAppbarLayout.setLayoutParams(mProtraitLayoutParams);
+        }
     }
 }
