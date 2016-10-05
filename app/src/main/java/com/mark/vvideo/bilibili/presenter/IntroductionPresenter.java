@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -127,6 +129,30 @@ public class IntroductionPresenter extends BasePresenterImpl implements Introduc
                     @Override
                     public void onNext(VideoInfo videoInfo) {
                         mView.setVideoInfo(videoInfo);
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    @Override
+    public void getDanmuInfo(int cid) {
+        Subscription subscription = mIntroduction.getDanmuInfo(cid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseDanmakuParser>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(BaseDanmakuParser baseDanmakuParser) {
+                        //LogUtils.d("base = " + baseDanmakuParser.getDanmakus().toString());
+                        mView.setDanmuInfo(baseDanmakuParser);
                     }
                 });
         addSubscription(subscription);

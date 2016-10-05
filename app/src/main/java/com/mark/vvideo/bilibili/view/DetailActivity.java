@@ -10,6 +10,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +35,14 @@ import com.mvp.library.utils.LogUtils;
 import com.mvp.library.utils.ScreenUtils;
 import com.mvp.library.utils.SizeUtils;
 
+import org.xml.sax.SAXParseException;
+
 import butterknife.BindView;
+import master.flame.danmaku.controller.DrawHandler;
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -123,6 +131,7 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mAid = getIntent().getStringExtra("aid");
+        LogUtils.d("aid = " + mAid);
         mPresenter = new IntroductionPresenter(this);
         super.onCreate(savedInstanceState);
     }
@@ -172,6 +181,8 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
                 mLoadingAnim = (AnimationDrawable) mBiliAnim.getBackground();
                 mLoadingAnim.start();
                 mPresenter.getVideoInfo(mIntroduction.getListBean().getCid());
+                //获取弹幕信息
+                mPresenter.getDanmuInfo(mIntroduction.getListBean().getCid());
             }
         });
     }
@@ -179,7 +190,6 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     @Override
     public void setIntroduction(Introduction introduction) {
         mIntroduction = introduction;
-        LogUtils.d("set introduction");
         if (mAdapter == null) {
             mAdapter = new DetailPagerAdapter(getSupportFragmentManager(), mAid, introduction);
             mViewpager.setOffscreenPageLimit(1);
@@ -200,10 +210,54 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     public void setVideoInfo(VideoInfo videoInfo) {
         LogUtils.d("set video info");
         mVideoUrl = videoInfo.getDurl().get(0).getUrl();
+        LogUtils.d("url = " + mVideoUrl);
         if (mIjkplayerView != null) {
             mCollapsingToolbar.setTitle(" ");
             mIjkplayerView.setVideoPath(mVideoUrl);
             mIjkplayerView.start(); //开始播放
+        }
+    }
+
+    /**
+     * 设置弹幕信息
+     */
+    @Override
+    public void setDanmuInfo(BaseDanmakuParser parser) {
+        if ( mDanmukuView != null ) {
+            /**
+             * 之所以在这里加上try catch 语句块
+             * 是因为解析xml时候 报org.xml.sax.SAXParseException这个错误
+             * 在strackoverflow http://stackoverflow.com/questions/2012127/saxparseexception-in-android 上
+             * 貌似存在的一个bug 加上后就可以了。
+             */
+            try {
+                mDanmukuView.prepare(parser, DanmakuContext.create());
+                mDanmukuView.showFPS(false);
+                mDanmukuView.enableDanmakuDrawingCache(false);
+                mDanmukuView.setCallback(new DrawHandler.Callback() {
+                    @Override
+                    public void prepared() {
+                        LogUtils.d("danmu prepared");
+                    }
+
+                    @Override
+                    public void updateTimer(DanmakuTimer timer) {
+
+                    }
+
+                    @Override
+                    public void danmakuShown(BaseDanmaku danmaku) {
+
+                    }
+
+                    @Override
+                    public void drawingFinished() {
+
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -216,6 +270,10 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
     public void onBackPressed() {
         mBackPressed = true;
         super.onBackPressed();
+        if ( mDanmukuView != null ) {
+            mDanmukuView.release();
+            mDanmukuView = null;
+        }
     }
 
     @Override
@@ -223,6 +281,9 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         super.onResume();
         if ( mIjkplayerView != null && !mIjkplayerView.isPlaying() ) {
             mIjkplayerView.seekTo(mLastPosition);
+        }
+        if ( mDanmukuView != null && mDanmukuView.isPrepared() && mDanmukuView.isPaused() ) {
+            mDanmukuView.resume();
         }
     }
 
@@ -232,6 +293,9 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         if ( mIjkplayerView != null ) {
             mLastPosition = mIjkplayerView.getCurrentPosition();  //记录当前视频位置
             mIjkplayerView.pause();
+        }
+        if ( mDanmukuView != null && mDanmukuView.isPrepared() ) {
+            mDanmukuView.pause();
         }
     }
 
@@ -259,6 +323,10 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         if ( mMediaController != null ) {
             mMediaController.onDestroy();
         }
+        if ( mDanmukuView != null ) {
+            mDanmukuView.release();
+            mDanmukuView = null;
+        }
     }
 
     /**
@@ -283,6 +351,7 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         LogUtils.d("on prepared");
         mLoadingAnim.stop(); //停止动画
         mVideoStart.setVisibility(View.GONE);
+        mDanmukuView.start(); //开启弹幕
     }
 
     /**
@@ -313,7 +382,19 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
      */
     @Override
     public void onCompletion(IMediaPlayer iMediaPlayer) {
-
+        if ( bufferingIndicator != null ) {
+            bufferingIndicator.setVisibility(View.GONE);
+        }
+        if ( mVideoView != null ) {
+            mVideoView.setVisibility(View.GONE);
+        }
+        if ( mVideoStart != null ) {
+            mVideoStart.setVisibility(View.GONE);
+        }
+        if ( mSdvPic != null ) {
+            mSdvPic.setVisibility(View.VISIBLE);
+        }
+        mCollapsingToolbar.setTitle(mIntroduction.getTitle());
     }
 
     /**

@@ -273,7 +273,7 @@ public class CustomMediaController extends MediaController implements IMediaCont
         }
     };
 
-    private void startOrientationChangeListener() {
+ /*   private void startOrientationChangeListener() {
          mOrientationListener = new OrientationEventListener(mContext) {
             @Override
             public void onOrientationChanged(int orientation) {
@@ -293,7 +293,7 @@ public class CustomMediaController extends MediaController implements IMediaCont
             }
         };
         mOrientationListener.enable();
-    }
+    }*/
 
     public void setOnOrientationChangeListener(OnOrientationChangeListener listener) {
         this.mOrientationChangeListener = listener;
@@ -310,11 +310,12 @@ public class CustomMediaController extends MediaController implements IMediaCont
         if ( mOrientationChangeListener != null ) {
             mOrientationChangeListener = null;
         }
+        if ( mHandler != null ) {
+            mHandler.removeMessages(SHOW_PROGRESS);
+            mHandler = null;
+        }
         if ( mPlayer != null ) {
             mPlayer = null;
-        }
-        if ( mHandler != null ) {
-            mHandler = null;
         }
     }
 }

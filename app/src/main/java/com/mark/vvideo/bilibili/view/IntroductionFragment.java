@@ -119,7 +119,6 @@ public class IntroductionFragment extends BaseLazyFragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mAid = getArguments().getString("aid");
         mIntroduction = getArguments().getParcelable("introduction");
-        LogUtils.d("introduction = " + mIntroduction.toString());
         super.onCreate(savedInstanceState);
 
     }

@@ -33,7 +33,9 @@ public class RetrofitManager {
 
     private static BiliApi mHostBiliApi = null;
 
-    private static BiliApi mBiliApiWithNoGson = null;
+    private static BiliApi mBiliApiWithNoGson = null; //解决由于json格式数据无法直接解析成bean
+
+    private static BiliApi mBiliApiDanmu = null;
 
     private static DouyuApi mDouyuApi = null;
 
@@ -88,6 +90,10 @@ public class RetrofitManager {
         return mHostBiliApi;
     }
 
+    /**
+     * 该方法是为了解决某些json数据源无法直接解析成bean, 需要手动解析的。
+     * @return
+     */
     public BiliApi getBiliApiWithNoGson() {
         if ( mBiliApiWithNoGson == null ) {
             synchronized (BiliApi.class) {
@@ -103,6 +109,28 @@ public class RetrofitManager {
             }
         }
         return mBiliApiWithNoGson;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BiliApi getBiliApiDanmu() {
+        if ( mBiliApiDanmu == null ) {
+            synchronized (BiliApi.class) {
+                if ( mBiliApiDanmu == null ) {
+                    mBiliApiDanmu = new Retrofit.Builder()
+                            .baseUrl("http://comment.bilibili.com")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .client(createOkHttpClient())
+                            .build()
+                            .create(BiliApi.class);
+                }
+            }
+
+        }
+        return mBiliApiDanmu;
     }
 
     /**
