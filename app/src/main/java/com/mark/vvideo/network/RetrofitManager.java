@@ -4,6 +4,7 @@ import com.mark.vvideo.base.App;
 import com.mark.vvideo.network.api.BiliApi;
 import com.mark.vvideo.network.api.DouyuApi;
 import com.mvp.library.utils.NetworkUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +58,7 @@ public class RetrofitManager {
     private OkHttpClient createOkHttpClient() {
         if ( mClient == null ) {
             OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
+            mBuilder.addInterceptor(new LoggerInterceptor("OkHttp"));
             mBuilder.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
             //设置超时
             mBuilder.connectTimeout(15, TimeUnit.SECONDS);

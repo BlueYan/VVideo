@@ -10,7 +10,7 @@ import java.util.List;
  * Date: 2016/9/18.
  * Function: Bilibili首页数据模型
  */
-public class AllRank {
+public class AllRank implements Parcelable {
 
 
     /**
@@ -84,7 +84,18 @@ public class AllRank {
         this.videos = videos;
     }
 
-    public static class VideosBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(sort_name);
+        dest.writeList(videos);
+    }
+
+    public static class VideosBean implements Parcelable{
         private String aid;
         private int mid;
         private String copyright;
@@ -264,6 +275,54 @@ public class AllRank {
 
         public void setBadgepay(boolean badgepay) {
             this.badgepay = badgepay;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            /*private String aid;
+            private int mid;
+            private String copyright;
+            private int typeid;
+            private String typename;
+            private String title;
+            private String subtitle;
+            private int play;
+            private int review;
+            private int video_review;
+            private int favorites;
+            private String author;
+            private String description;
+            private String create;
+            private String pic;
+            private int credit;
+            private int coins;
+            private String duration;
+            private int comment;
+            private boolean badgepay;*/
+            dest.writeString(aid);
+            dest.writeInt(mid);
+            dest.writeString(copyright);
+            dest.writeInt(typeid);
+            dest.writeString(typename);
+            dest.writeString(title);
+            dest.writeString(subtitle);
+            dest.writeInt(play);
+            dest.writeInt(review);
+            dest.writeInt(video_review);
+            dest.writeInt(favorites);
+            dest.writeString(author);
+            dest.writeString(description);
+            dest.writeString(create);
+            dest.writeString(pic);
+            dest.writeInt(credit);
+            dest.writeInt(coins);
+            dest.writeString(duration);
+            dest.writeInt(comment);
         }
     }
 }

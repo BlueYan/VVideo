@@ -52,13 +52,6 @@ public class AllRankPresenter extends BasePresenterImpl implements AllRankContra
 
                     @Override
                     public void onNext(List<AllRank> allRankModels) {
-                        for ( int i = 0; i < allRankModels.size(); i++ ) {
-                            AllRank allRank = allRankModels.get(i);
-                            List<AllRank.VideosBean> videosBeans = allRank.getVideos();
-                            for ( AllRank.VideosBean videosBean : videosBeans ) {
-                                LogUtils.d("title = " + videosBean.getTitle());
-                            }
-                        }
                         mAllRankView.setViewPager(allRankModels);
                     }
                 });

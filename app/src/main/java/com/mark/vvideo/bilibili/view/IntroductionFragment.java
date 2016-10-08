@@ -1,10 +1,8 @@
 package com.mark.vvideo.bilibili.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,11 @@ import com.mark.vvideo.R;
 import com.mark.vvideo.base.BaseLazyFragment;
 import com.mark.vvideo.bilibili.adapter.TagAdapter;
 import com.mark.vvideo.bilibili.contract.IntroductionContract;
-import com.mark.vvideo.bilibili.model.entry.Comment;
 import com.mark.vvideo.bilibili.model.entry.Introduction;
 import com.mark.vvideo.bilibili.model.entry.Tag;
-import com.mark.vvideo.bilibili.presenter.IntroductionPresenter;
 import com.mark.vvideo.util.Utils;
 import com.mvp.library.utils.LogUtils;
+import com.mvp.library.utils.SizeUtils;
 import com.mvp.library.utils.TimeUtils;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +35,7 @@ import butterknife.ButterKnife;
  * Function: 简介界面
  */
 
-public class IntroductionFragment extends BaseLazyFragment{
+public class IntroductionFragment extends BaseLazyFragment {
 
     private static final String TAG = IntroductionFragment.class.getSimpleName();
 
@@ -93,8 +90,9 @@ public class IntroductionFragment extends BaseLazyFragment{
     @BindView(R.id.id_view_line)
     View idViewLine;
 
-    @BindView(R.id.id_tag_recyclerview)
-    RecyclerView mTagRecyclerview;
+    @BindView(R.id.id_ll_video_tag)
+    LinearLayout mLlVideoTag;
+
 
     private boolean isPrepared = false;
 
@@ -126,7 +124,6 @@ public class IntroductionFragment extends BaseLazyFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //mPresenter = new IntroductionPresenter(this);
         isPrepared = true;
         onLazyInit();
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -137,7 +134,6 @@ public class IntroductionFragment extends BaseLazyFragment{
         if (!isPrepared || !isVisible) {
             return;
         }
-        //mPresenter.getIntroduction(Integer.valueOf(mAid));
         LogUtils.d("lazy init");
     }
 
@@ -148,18 +144,9 @@ public class IntroductionFragment extends BaseLazyFragment{
 
     @Override
     protected void initView() {
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
-        //StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        mTagRecyclerview.setLayoutManager(mLayoutManager);
         setIntroduction(mIntroduction);
     }
 
-//    @Override
-//    public void setPresenter(IntroductionContract.Presenter presenter) {
-//        this.mPresenter = presenter;
-//    }
-
-    //@Override
     public void setIntroduction(Introduction introduction) {
         mTvTitle.setText(introduction.getTitle());
         mTvPlayNum.setText(Utils.parseNumber(Integer.valueOf(introduction.getPlay())));
@@ -172,17 +159,15 @@ public class IntroductionFragment extends BaseLazyFragment{
         mTvAuthor.setText(introduction.getAuthor());
         mTvTime.setText(TimeUtils.getDateDiff(introduction.getCreatedAt(),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm")) + "投稿");
-
         String tagArray[] = introduction.getTag().split(",");
-        List<Tag> mTags = new ArrayList<Tag>();
-        for ( int i = 0; i < tagArray.length; i++ ) {
-            Tag mTag = new Tag(tagArray[i]);
-            mTags.add(mTag);
-        }
-        if ( mTagAdapter == null ) {
-            mTagAdapter = new TagAdapter(getContext(), mTags);
-            mTagRecyclerview.setAdapter(mTagAdapter);
-        }
+       /* for (int i = 0; i < tagArray.length; i++) {
+            TextView mTag = new TextView(getContext());
+            mTag.setText(tagArray[i]);
+            mTag.setBackgroundColor(Color.parseColor("#CCCCCC"));
+            mTag.setPadding(SizeUtils.dp2px(getContext(), 5), SizeUtils.dp2px(getContext(), 5),
+                    SizeUtils.dp2px(getContext(), 5), SizeUtils.dp2px(getContext(), 5));
+            mLlVideoTag.addView(mTag);
+        }*/
     }
 
 }

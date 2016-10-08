@@ -325,13 +325,14 @@
             android:layout_marginTop="10dp"
             />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/id_tag_recyclerview"
+        <LinearLayout
+            android:id="@+id/id_ll_video_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@id/id_tv_video"
             android:layout_marginTop="10dp"
-            />
+            ></LinearLayout>
 
     </RelativeLayout>
 

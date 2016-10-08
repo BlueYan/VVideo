@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mark.vvideo.bilibili.view.CartoonFragment;
+import com.mvp.library.utils.LogUtils;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return CartoonFragment.newInstance(allRanks.get(position).getVideos());
-    }
+}
 
     @Override
     public CharSequence getPageTitle(int position) {

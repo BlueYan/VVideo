@@ -2,6 +2,7 @@ package com.mark.vvideo.bilibili.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.mark.vvideo.bilibili.adapter.CartoonAdapter;
 import com.mark.vvideo.bilibili.model.entry.AllRank;
 import com.mvp.library.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,16 +34,24 @@ public class CartoonFragment extends BaseLazyFragment {
     @BindView(R.id.id_rv)
     XRecyclerView mRv;
 
-    private static List<AllRank.VideosBean> mVideosBeans;
+    private List<AllRank.VideosBean> mVideosBeans;
 
     private CartoonAdapter mAdapter;
 
     private boolean isPerpared = false;
 
-    public static CartoonFragment newInstance(List<AllRank.VideosBean> videosBeens) {
-        mVideosBeans = videosBeens;
+    public static CartoonFragment newInstance(List<AllRank.VideosBean> videosBeans) {
         CartoonFragment mFragment = new CartoonFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("videoBeans", (ArrayList<? extends Parcelable>) videosBeans);
+        mFragment.setArguments(args);
         return mFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mVideosBeans = getArguments().getParcelableArrayList("videoBeans");
     }
 
     @Nullable
@@ -60,7 +70,6 @@ public class CartoonFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
-        LogUtils.d("onCreateView");
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         mRv.setLayoutManager(manager);
         mRv.setPullRefreshEnabled(false);

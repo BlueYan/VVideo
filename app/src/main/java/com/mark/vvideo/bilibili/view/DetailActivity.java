@@ -394,6 +394,9 @@ public class DetailActivity extends BaseActivity implements IntroductionContract
         if ( mSdvPic != null ) {
             mSdvPic.setVisibility(View.VISIBLE);
         }
+        if ( mDanmukuView != null ){
+            mDanmukuView.stop();
+        }
         mCollapsingToolbar.setTitle(mIntroduction.getTitle());
     }
 
