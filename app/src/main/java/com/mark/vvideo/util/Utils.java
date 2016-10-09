@@ -16,9 +16,9 @@ import java.util.zip.Inflater;
  */
 public class Utils {
 
-    private static final String URL_PARAM = "?aid=android&client_sys=android&time=";
+    private static final String URL_PARAM = "?aid=android&client_sys=android&ne=1&support_pwd=1&time=";
 
-    private static final String URL_PARAM1 = "?aid=android&clientsys=android&time=";
+    private static final String URL_PARAM1 = "?aid=android&client_sys=android&time=";
 
     public static String parseNumber(int num) {
         if ( num / 1000 >= 1 ) {

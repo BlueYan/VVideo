@@ -26,6 +26,14 @@
             app:expandedTitleMarginStart="30dp"
             >
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/id_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"
+                />
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/id_sdv_pic"
                 android:layout_width="match_parent"
@@ -45,24 +53,10 @@
                 android:fitsSystemWindows="true"
                 />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/id_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin"
-                />
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    
-    <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--&gt;-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -88,11 +82,6 @@
 
         </RelativeLayout>
 
-
-
-    <!--</android.support.v4.widget.NestedScrollView>-->
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/id_play_btn"
         android:layout_width="wrap_content"
@@ -101,5 +90,7 @@
         app:layout_anchor="@id/id_appbarLayout"
         app:layout_anchorGravity="bottom|right|end"
         />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

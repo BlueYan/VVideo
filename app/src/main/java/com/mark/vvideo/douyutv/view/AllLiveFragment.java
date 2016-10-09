@@ -117,8 +117,8 @@ public class AllLiveFragment extends BaseFragment implements AllLiveContract.Vie
             mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
                 @Override
                 public void onClickListener(View view, int position) {
-                    String mRoomId = mData.get(position).getRoom_id();
-                    LogUtils.d("roomid = " + mData.get(position).getRoom_id());
+                    String mRoomId = mData.get(position - 1).getRoom_id();
+                    LogUtils.d("roomid = " + mRoomId);
                     Utils.getUrl(mRoomId);
                 }
             });
